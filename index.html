@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#081217" />
-  <meta name="description" content="PCIe CitySim — a low-poly interactive animation for exploring PCI Express topology." />
-  <title>PCIe CitySim — Link in Motion</title>
+  <meta name="description" content="Learning City — PCIe Fabric Region, a beginner-friendly interactive guide to PCI Express topology." />
+  <title>Learning City / PCIe Fabric Region</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -14,39 +14,66 @@
 <body>
   <div class="page-shell">
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="PCIe CitySim home">
+      <a class="brand" href="#top" aria-label="Learning City PCIe Fabric Region home">
         <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span>PCIe <b>CITYSIM</b></span>
+        <span>LEARNING <b>CITY</b></span>
       </a>
       <div class="topbar-meta">
         <span class="live-dot"></span>
-        <span>LIVE FABRIC</span>
+        <span>REGION 03 · PCIe FABRIC</span>
         <span class="divider"></span>
         <span class="mono">GEN 3 · x16</span>
       </div>
-      <a class="source-link" href="knowledge_base/01_架構與拓撲.md">閱讀架構筆記 <span>↗</span></a>
+      <a class="source-link" href="#learning">新手學習導覽 <span>↘</span></a>
     </header>
 
     <main id="top">
       <section class="intro-grid">
         <div class="intro-copy">
-          <p class="eyebrow"><span class="eyebrow-line"></span>拓撲視覺化 · TOPOLOGY VISUALIZER</p>
-          <h1>Build the bus.<br /><em>Watch data move.</em></h1>
-          <p class="lede">把 PCI Express 想成一座會呼吸的城市：Root Complex 是市政廳，Switch 是轉運樞紐，而每一個 Endpoint 都在請求、傳送、回覆。</p>
+          <div class="region-breadcrumb"><span>LEARNING CITY</span><b>/</b><span>REGIONS</span><b>/</b><strong>PCIe FABRIC</strong></div>
+          <p class="eyebrow"><span class="eyebrow-line"></span>REGION 03 · 協定與拓撲 · PROTOCOLS</p>
+          <h1>Explore the PCIe<br /><em>fabric district.</em></h1>
+          <p class="lede">Learning City 的每個主題都是一個可以探索的區域。這一區把 PCI Express 想成一座會呼吸的城市：Root Complex 是市政廳，Switch 是轉運樞紐，而每一個 Endpoint 都在請求、傳送、回覆。</p>
           <div class="intro-actions">
             <button class="primary-btn" id="toggle-sim" type="button"><span class="play-icon">Ⅱ</span><span>暫停模擬</span></button>
             <button class="text-btn" id="pulse-btn" type="button">發送一個 TLP <span>↗</span></button>
           </div>
         </div>
-        <div class="city-stamp" aria-label="Simulation status">
+        <div class="city-stamp" aria-label="Learning City PCIe region status">
           <div class="stamp-orbit"></div>
-          <span class="stamp-label">SYSTEM<br />STABLE</span>
+          <span class="stamp-label">REGION 03<br />PCIe FABRIC</span>
           <strong>98.7<small>%</small></strong>
           <span class="stamp-foot">fabric integrity</span>
         </div>
       </section>
+      <section class="learning-journey" id="learning" aria-labelledby="journey-title">
+        <div class="learning-heading">
+          <div>
+            <p class="section-kicker">00 / 新手入口 · START HERE</p>
+            <h2 id="journey-title">先懂城市，再看封包。</h2>
+          </div>
+          <p>不用先背規格。先用三個問題建立 PCIe 的心智模型，再回到城市裡觀察它真的怎麼運作。</p>
+        </div>
+        <div class="journey-track">
+          <article class="journey-card">
+            <span class="journey-number">01</span>
+            <div><h3>它解決什麼？</h3><p>PCIe 是 CPU、記憶體和高速裝置之間的可擴充通道。</p><button class="mini-link lesson-jump" data-target="concepts" type="button">先看三個概念 <span>↗</span></button></div>
+          </article>
+          <article class="journey-card">
+            <span class="journey-number">02</span>
+            <div><h3>誰住在城市裡？</h3><p>Root Complex、Switch、Endpoint 各自扮演不同角色。</p><button class="mini-link lesson-jump" data-target="glossary" type="button">打開名詞圖鑑 <span>↗</span></button></div>
+          </article>
+          <article class="journey-card">
+            <span class="journey-number">03</span>
+            <div><h3>我真的學會了嗎？</h3><p>用五題小測驗檢查自己能不能讀懂一個 PCIe 拓撲。</p><button class="mini-link lesson-jump" data-target="quiz" type="button">開始小測驗 <span>↗</span></button></div>
+          </article>
+        </div>
+      </section>
 
-      <section class="simulation-layout" aria-label="PCIe city simulation">
+      <div class="section-rule" aria-hidden="true"><span>THE CITY IS A METAPHOR — THE PACKET IS REAL</span></div>
+
+      <section class="simulation-layout" id="simulation" aria-label="PCIe city simulation">
+
         <div class="city-panel panel-surface">
           <div class="panel-heading">
             <div>
@@ -157,6 +184,92 @@
         </aside>
       </section>
 
+      <section class="learning-lab" id="concepts" aria-labelledby="concept-title">
+        <div class="learning-heading lab-heading">
+          <div>
+            <p class="section-kicker">05 / 基本概念 · THE BIG THREE</p>
+            <h2 id="concept-title">先記住這三件事。</h2>
+          </div>
+          <p>這三個概念會反覆出現在每一個 PCIe 問題裡：路、角色、對話。</p>
+        </div>
+        <div class="concept-strip">
+          <article class="concept-card">
+            <span class="concept-glyph">01</span>
+            <div><h3>Link 是一條路</h3><p>兩個 PCIe 裝置之間的連線叫 Link。它由一條或多條 Lane 組成，Lane 越多，能同時通過的資料越多。</p><b>想像：城市道路</b></div>
+          </article>
+          <article class="concept-card">
+            <span class="concept-glyph">02</span>
+            <div><h3>Device 是一個角色</h3><p>Root Complex 發起旅程，Switch 分流，Endpoint 提供功能。每個節點都有自己的位置與責任。</p><b>想像：市政廳、轉運站、店家</b></div>
+          </article>
+          <article class="concept-card">
+            <span class="concept-glyph">03</span>
+            <div><h3>TLP 是一段對話</h3><p>資料不是直接消失在電線裡，而是被包成 Transaction Layer Packet，在節點間傳遞請求、資料與回覆。</p><b>想像：有地址的包裹</b></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="learning-grid" id="glossary" aria-label="PCIe beginner glossary and quiz">
+        <div class="glossary-panel panel-surface">
+          <div class="panel-heading compact">
+            <div><p class="section-kicker">06 / 名詞圖鑑 · GLOSSARY</p><h2>PCIe in plain words</h2></div>
+            <span class="term-total mono">08 TERMS</span>
+          </div>
+          <div class="glossary-intro"><p>先看白話，再把它對回城市。每一張卡都只回答一個新手最常問的問題。</p></div>
+          <div class="term-filters" role="group" aria-label="Filter glossary terms">
+            <button class="term-filter active" data-filter="all" type="button">全部</button>
+            <button class="term-filter" data-filter="topology" type="button">城市角色</button>
+            <button class="term-filter" data-filter="transport" type="button">封包與通道</button>
+          </div>
+          <div class="term-grid" id="term-grid">
+            <article class="term-card" data-category="transport">
+              <div class="term-card-top"><span class="term-code">TERM 01</span><span class="term-chip">PROTOCOL</span></div><h3>PCIe</h3><p>Peripheral Component Interconnect Express。電腦裡讓高速裝置交換資料的點對點連線標準。</p><div class="term-analogy"><span>城市比喻</span><b>整座城市的交通規則</b></div><button class="term-jump" data-node="switch" type="button">在城市裡看 <span>↗</span></button>
+            </article>
+            <article class="term-card" data-category="transport">
+              <div class="term-card-top"><span class="term-code">TERM 02</span><span class="term-chip">PHYSICAL</span></div><h3>Lane</h3><p>一條獨立的傳送與接收通道。PCIe 常見 x1、x4、x8、x16，x 後面的數字就是 Lane 數量。</p><div class="term-analogy"><span>城市比喻</span><b>高速公路的一條車道</b></div><button class="term-jump" data-node="gpu" type="button">看 x8 Downlink <span>↗</span></button>
+            </article>
+            <article class="term-card" data-category="transport">
+              <div class="term-card-top"><span class="term-code">TERM 03</span><span class="term-chip">PHYSICAL</span></div><h3>Link Width</h3><p>一條 Link 使用多少 Lane。x16 理論上比 x4 能同時搬運更多資料，但實際速度也受 Gen 世代與協定效率影響。</p><div class="term-analogy"><span>城市比喻</span><b>道路有幾線道</b></div><button class="term-jump" data-node="switch" type="button">查看 x16 主幹 <span>↗</span></button>
+            </article>
+            <article class="term-card" data-category="topology">
+              <div class="term-card-top"><span class="term-code">TERM 04</span><span class="term-chip">TOPOLOGY</span></div><h3>Root Complex</h3><p>PCIe 拓撲的根。它把 CPU 與記憶體世界接進 PCIe，也負責開始很多資料請求。</p><div class="term-analogy"><span>城市比喻</span><b>市政廳與城市入口</b></div><button class="term-jump" data-node="root" type="button">前往市政廳 <span>↗</span></button>
+            </article>
+            <article class="term-card" data-category="topology">
+              <div class="term-card-top"><span class="term-code">TERM 05</span><span class="term-chip">TOPOLOGY</span></div><h3>Switch</h3><p>把一個 PCIe 連線分成多個下游路徑，根據目的地把封包轉送到正確的 Endpoint。</p><div class="term-analogy"><span>城市比喻</span><b>會看地址的轉運站</b></div><button class="term-jump" data-node="switch" type="button">看轉運樞紐 <span>↗</span></button>
+            </article>
+            <article class="term-card" data-category="topology">
+              <div class="term-card-top"><span class="term-code">TERM 06</span><span class="term-chip">TOPOLOGY</span></div><h3>Endpoint</h3><p>真正提供功能的裝置，例如 GPU、NVMe、網路卡。它通常是資料旅程的目的地或來源。</p><div class="term-analogy"><span>城市比喻</span><b>工廠、倉庫與店家</b></div><button class="term-jump" data-node="storage" type="button">看 NVMe 倉庫 <span>↗</span></button>
+            </article>
+            <article class="term-card" data-category="transport">
+              <div class="term-card-top"><span class="term-code">TERM 07</span><span class="term-chip">PACKET</span></div><h3>TLP</h3><p>Transaction Layer Packet。封包裡放著「我要讀什麼」、「我要寫什麼」或「這是回覆」等交易資訊。</p><div class="term-analogy"><span>城市比喻</span><b>寫好寄件地址的包裹</b></div><button class="term-jump" data-node="gpu" type="button">發送一個 TLP <span>↗</span></button>
+            </article>
+            <article class="term-card" data-category="transport">
+              <div class="term-card-top"><span class="term-code">TERM 08</span><span class="term-chip">PACKET</span></div><h3>Completion</h3><p>對 Non-Posted Request 的回覆封包。當裝置收到讀取請求，通常要用 Completion 把結果送回去。</p><div class="term-analogy"><span>城市比喻</span><b>回覆「貨已找到」的回執</b></div><button class="term-jump" data-node="storage" type="button">觀察回覆流 <span>↗</span></button>
+            </article>
+          </div>
+        </div>
+
+        <aside class="quiz-panel panel-surface" id="quiz" aria-labelledby="quiz-title">
+          <div class="panel-heading compact">
+            <div><p class="section-kicker">07 / 小測驗 · CHECKPOINT</p><h2 id="quiz-title">你會怎麼選？</h2></div>
+            <span class="quiz-score mono" id="quiz-score">0 / 5</span>
+          </div>
+          <div class="quiz-body">
+            <div class="quiz-progress"><i id="quiz-progress-fill"></i></div>
+            <p class="quiz-count mono" id="quiz-count">QUESTION 01 / 05</p>
+            <h3 id="quiz-question">如果把 PCIe 想成城市，誰最像「市政廳」？</h3>
+            <div class="quiz-options" id="quiz-options"></div>
+            <div class="quiz-feedback" id="quiz-feedback" aria-live="polite"></div>
+            <button class="quiz-next primary-btn" id="quiz-next" type="button" disabled>選好答案 <span>→</span></button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="lesson-note panel-surface" aria-label="Learning note">
+        <span class="note-mark">NOTE / 00</span>
+        <p><b>新手提示：</b>你不需要一次記住所有縮寫。先能說出「誰在送、送去哪裡、封包帶著什麼」，就已經掌握 PCIe 的骨架。</p>
+        <button class="text-btn lesson-jump" data-target="simulation" type="button">回到城市觀察 <span>↗</span></button>
+      </section>
+
       <section class="control-deck panel-surface">
         <div class="control-heading"><p class="section-kicker">04 / 城市控制台</p><h2>Simulation controls</h2><p>調整這座 PCIe 城市的節奏。速度越快，封包流動越密集。</p></div>
         <div class="control-group speed-control"><div class="control-label"><span>SIMULATION SPEED</span><b id="speed-label">1.0×</b></div><input id="speed-range" type="range" min="0.5" max="2.5" value="1" step="0.5" aria-label="Simulation speed" /><div class="range-labels"><span>0.5×</span><span>2.5×</span></div></div>
@@ -164,7 +277,7 @@
         <div class="control-group fabric-health"><div class="control-label"><span>FABRIC LOAD</span><b id="load-label">64%</b></div><div class="load-bar"><i id="load-fill"></i></div><small>credits are circulating normally</small></div>
       </section>
     </main>
-    <footer class="footer"><span>PCIe CITYSIM / AN INTERACTIVE PROTOCOL STUDY</span><span class="mono">BUILD 03.0.0 · <a href="https://github.com/" target="_blank" rel="noreferrer">GITHUB PAGES READY ↗</a></span></footer>
+    <footer class="footer"><span>LEARNING CITY / REGION 03 · PCIe FABRIC</span><span class="mono">BUILD 03.0.0 · <a href="https://github.com/twtschi/learning-city" target="_blank" rel="noreferrer">GITHUB PAGES READY ↗</a></span></footer>
   </div>
   <script src="app.js"></script>
 </body>

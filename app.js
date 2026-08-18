@@ -194,3 +194,100 @@ selectDistrict('switch');
 updateSpeed(1);
 renderActivity();
 requestAnimationFrame(animate);
+
+const quizQuestions = [
+  {
+    question: '如果把 PCIe 想成城市，誰最像「市政廳」？',
+    options: ['Root Complex', 'Switch', 'Endpoint', 'TLP'],
+    answer: 0,
+    explanation: 'Root Complex 是 PCIe 拓撲的根，負責把 CPU / 記憶體世界接進這座城市。'
+  },
+  {
+    question: 'Link Width 寫成 x8，最直接代表什麼？',
+    options: ['速度是第 8 代', '這條 Link 有 8 條 Lane', '有 8 個 Endpoint', '封包大小是 8 bytes'],
+    answer: 1,
+    explanation: 'x 後面的數字是 Lane 數量；x8 就是 8 條獨立的傳送與接收通道。'
+  },
+  {
+    question: 'Switch 在 PCIe 城市裡最主要的工作是什麼？',
+    options: ['把資料永久儲存起來', '替每個裝置產生電力', '依目的地把封包轉送到正確路徑', '把 TLP 翻譯成 HTML'],
+    answer: 2,
+    explanation: 'Switch 會看封包的目的地，將流量分送到正確的下游 Endpoint。'
+  },
+  {
+    question: 'TLP 最接近下面哪一種描述？',
+    options: ['一棟 PCIe 建築物', '一條實體 Lane', '帶有交易資訊的封包', '一個作業系統程序'],
+    answer: 2,
+    explanation: 'TLP 是 Transaction Layer Packet，裡面放著讀取、寫入或回覆等交易資訊。'
+  },
+  {
+    question: '裝置收到讀取請求後，通常用什麼回覆結果？',
+    options: ['Completion', 'Lane', 'Root Complex', 'Link Width'],
+    answer: 0,
+    explanation: 'Completion 是對 Non-Posted Request 的回覆，會把讀取結果送回請求方。'
+  }
+];
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function renderQuiz() {
+  const question = quizQuestions[quizIndex];
+  quizAnswered = false;
+  document.querySelector('#quiz-count').textContent = `QUESTION ${String(quizIndex + 1).padStart(2, '0')} / ${quizQuestions.length}`;
+  document.querySelector('#quiz-progress-fill').style.width = `${((quizIndex + 1) / quizQuestions.length) * 100}%`;
+  document.querySelector('#quiz-score').textContent = `${quizScore} / ${quizQuestions.length}`;
+  document.querySelector('#quiz-question').textContent = question.question;
+  document.querySelector('#quiz-feedback').textContent = '';
+  document.querySelector('#quiz-feedback').className = 'quiz-feedback';
+  const nextButton = document.querySelector('#quiz-next');
+  nextButton.disabled = true;
+  nextButton.innerHTML = '選好答案 <span>→</span>';
+  document.querySelector('#quiz-options').innerHTML = question.options.map((option, index) => `<button class="quiz-option" data-answer="${index}" type="button"><span class="option-letter">${String.fromCharCode(65 + index)}</span> ${option}</button>`).join('');
+  document.querySelectorAll('.quiz-option').forEach((option) => option.addEventListener('click', () => answerQuiz(Number(option.dataset.answer))));
+}
+function answerQuiz(answer) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const question = quizQuestions[quizIndex];
+  const correct = answer === question.answer;
+  if (correct) quizScore += 1;
+  document.querySelectorAll('.quiz-option').forEach((option) => {
+    const optionAnswer = Number(option.dataset.answer);
+    option.disabled = true;
+    if (optionAnswer === question.answer) option.classList.add('correct');
+    if (optionAnswer === answer && !correct) option.classList.add('incorrect');
+  });
+  const feedback = document.querySelector('#quiz-feedback');
+  feedback.className = `quiz-feedback ${correct ? 'correct' : 'incorrect'}`;
+  feedback.textContent = `${correct ? '答對了。' : '再想一下。'} ${question.explanation}`;
+  document.querySelector('#quiz-score').textContent = `${quizScore} / ${quizQuestions.length}`;
+  const nextButton = document.querySelector('#quiz-next');
+  nextButton.disabled = false;
+  nextButton.innerHTML = quizIndex === quizQuestions.length - 1 ? '看結果 <span>→</span>' : '下一題 <span>→</span>';
+}
+document.querySelector('#quiz-next').addEventListener('click', () => {
+  if (!quizAnswered) return;
+  if (quizIndex === quizQuestions.length - 1) {
+    quizIndex = 0;
+    quizScore = 0;
+  } else {
+    quizIndex += 1;
+  }
+  renderQuiz();
+});
+document.querySelectorAll('.term-filter').forEach((filterButton) => filterButton.addEventListener('click', () => {
+  const filter = filterButton.dataset.filter;
+  document.querySelectorAll('.term-filter').forEach((button) => button.classList.toggle('active', button === filterButton));
+  document.querySelectorAll('.term-card').forEach((card) => card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter));
+}));
+document.querySelectorAll('.lesson-jump').forEach((button) => button.addEventListener('click', () => {
+  const target = document.querySelector(`#${button.dataset.target}`);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
+document.querySelectorAll('.term-jump').forEach((button) => button.addEventListener('click', () => {
+  selectDistrict(button.dataset.node);
+  document.querySelector('#simulation').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  if (button.textContent.includes('TLP')) pulseButton.click();
+}));
+renderQuiz();
