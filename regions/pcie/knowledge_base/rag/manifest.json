@@ -1,0 +1,38 @@
+{
+  "name": "PCI Express 3.0 Knowledge Base",
+  "generated_at": "2026-08-18T09:42:43.389738+00:00",
+  "format": "JSON Lines; one retrieval chunk per line",
+  "record_count": 1759,
+  "counts_by_source": {
+    "BOOK": 1633,
+    "BP": 15,
+    "KB_NOTE": 111
+  },
+  "sources": [
+    {
+      "id": "BOOK",
+      "file": "Mike Jackson, Ravi Budruk, Joseph Winkles, Don Anderson - PCI Express Technology 3.0-MindShare Press (2012).pdf",
+      "pages": 1057,
+      "sha256": "87aebc8dd589617845c3318bd6964b208acfbf2b2d09c63479a074edf005166e"
+    },
+    {
+      "id": "BP",
+      "file": "PCIe_3.0_Architecture_Blueprint.pdf",
+      "pages": 15,
+      "sha256": "4423c5cad14aa756839a30a21074c11501b78cfafa0c1e7ddc65b410bd67ff7d"
+    }
+  ],
+  "schema": {
+    "id": "stable chunk id",
+    "source_id": "BOOK, BP, or KB_NOTE",
+    "source_file": "originating filename",
+    "content_kind": "source_text, visual_summary, or curated_note",
+    "pdf_page": "1-based physical PDF page when applicable",
+    "part": "book part or knowledge-base collection",
+    "chapter": "chapter title",
+    "section": "nearest outline or note heading",
+    "title": "display title",
+    "tags": "retrieval hints",
+    "content": "UTF-8 text"
+  }
+}
