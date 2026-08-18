@@ -46,6 +46,25 @@
           <span class="stamp-foot">fabric integrity</span>
         </div>
       </section>
+
+      <section class="explorer-hud" id="progress" aria-label="PCIe explorer status">
+        <div class="explorer-profile panel-surface">
+          <div class="profile-emblem" aria-hidden="true"><span>LV</span><strong id="player-level">01</strong></div>
+          <div class="profile-copy">
+            <div class="profile-kicker"><span>LINK WALKER</span><i></i><span>初學者職業</span></div>
+            <h2>Protocol Explorer</h2>
+            <p>你的任務不是背完所有縮寫，而是沿著封包走過每一層。</p>
+            <div class="xp-label"><span>EXPLORATION XP</span><b id="player-xp">120 / 500 XP</b></div>
+            <div class="xp-bar"><i id="xp-fill"></i></div>
+          </div>
+          <div class="profile-rank"><span>RANK</span><strong id="player-rank">FABRIC SCOUT</strong><small id="quest-complete-count">0 / 6 QUESTS</small></div>
+        </div>
+        <div class="explorer-inventory panel-surface">
+          <p class="section-kicker">EXPLORER LOG</p>
+          <div class="inventory-row"><span>DISCOVERED</span><b id="badge-count">01</b><small>district badge</small></div>
+          <div class="inventory-row"><span>ACTIVE QUEST</span><b id="active-quest-label">GATE 00</b><small id="active-quest-name">Find the Root</small></div>
+        </div>
+      </section>
       <section class="learning-journey" id="learning" aria-labelledby="journey-title">
         <div class="learning-heading">
           <div>
@@ -70,6 +89,55 @@
         </div>
       </section>
 
+      <section class="quest-board" id="quests" aria-labelledby="quest-title">
+        <div class="learning-heading quest-heading">
+          <div>
+            <p class="section-kicker">01 / 任務板 · QUEST BOARD</p>
+            <h2 id="quest-title">The Fabric Campaign</h2>
+          </div>
+          <p>PCIe 不是一條直線課程。選一個任務進城，完成觀察後回來解鎖下一枚徽章。</p>
+        </div>
+        <div class="quest-layout">
+          <div class="quest-map panel-surface">
+            <div class="quest-map-head"><span class="map-live"><i></i> ADVENTURE MAP</span><span class="mono">6 DISTRICTS / 1 FABRIC</span></div>
+            <div class="quest-path" aria-label="PCIe protocol district map">
+              <div class="quest-node node-topology active"><span class="node-ring"></span><b>01</b><small>TOPOLOGY</small></div>
+              <span class="path-line lit"></span>
+              <div class="quest-node node-transaction"><span class="node-ring"></span><b>02</b><small>TRANSACTION</small></div>
+              <span class="path-line"></span>
+              <div class="quest-node node-flow"><span class="node-ring"></span><b>03</b><small>FLOW CTRL</small></div>
+              <span class="path-line"></span>
+              <div class="quest-node node-link"><span class="node-ring"></span><b>04</b><small>DATA LINK</small></div>
+              <span class="path-line"></span>
+              <div class="quest-node node-physical"><span class="node-ring"></span><b>05</b><small>PHYSICAL</small></div>
+              <span class="path-line"></span>
+              <div class="quest-node node-systems"><span class="node-ring"></span><b>06</b><small>SYSTEMS</small></div>
+            </div>
+            <div class="quest-map-foot"><span><i class="map-key current"></i> current quest</span><span><i class="map-key route"></i> route ahead</span><span><i class="map-key future"></i> future district</span></div>
+          </div>
+          <div class="quest-cards">
+            <article class="quest-card selected" id="quest-topology" data-quest="topology">
+              <div class="quest-card-top"><span class="quest-number">QUEST 01</span><span class="quest-status next">NEXT</span></div><h3>Gate 00: Find the Root</h3><p>在城市地圖裡找到 Root Complex，說出它為什麼是整個 PCIe 拓撲的起點。</p><div class="quest-meta"><span>+40 XP</span><span>TOPOLOGY</span></div><button class="quest-action" data-quest-action="topology" type="button">開始任務 <span>→</span></button>
+            </article>
+            <article class="quest-card" id="quest-transaction" data-quest="transaction">
+              <div class="quest-card-top"><span class="quest-number">QUEST 02</span><span class="quest-status">AVAILABLE</span></div><h3>TLP Market: Deliver a Read</h3><p>發送一個封包，觀察它如何經過 Switch，抵達 GPU 或 NVMe 這些 Endpoint。</p><div class="quest-meta"><span>+60 XP</span><span>TRANSACTION</span></div><button class="quest-action" data-quest-action="transaction" type="button">進入市場 <span>→</span></button>
+            </article>
+            <article class="quest-card" id="quest-flow" data-quest="flow">
+              <div class="quest-card-top"><span class="quest-number">QUEST 03</span><span class="quest-status">AVAILABLE</span></div><h3>Credit Reservoir: Keep Moving</h3><p>切換 Burst 與 Quiet 流量，觀察 Flow Credits 如何保護城市不被封包淹沒。</p><div class="quest-meta"><span>+70 XP</span><span>FLOW CONTROL</span></div><button class="quest-action" data-quest-action="flow" type="button">調查水庫 <span>→</span></button>
+            </article>
+            <article class="quest-card" id="quest-link" data-quest="link">
+              <div class="quest-card-top"><span class="quest-number">QUEST 04</span><span class="quest-status">AVAILABLE</span></div><h3>Replay Dock: Read the Receipt</h3><p>從 Packet Stream 找到 Completion，理解為什麼讀取請求需要一個回覆。</p><div class="quest-meta"><span>+55 XP</span><span>DATA LINK</span></div><button class="quest-action" data-quest-action="link" type="button">靠岸查看 <span>→</span></button>
+            </article>
+            <article class="quest-card" id="quest-physical" data-quest="physical">
+              <div class="quest-card-top"><span class="quest-number">QUEST 05</span><span class="quest-status">AVAILABLE</span></div><h3>Equalization Summit</h3><p>把 Lane、Link Width、Gen 速度放回同一張地圖，理解資料真正走的物理道路。</p><div class="quest-meta"><span>+65 XP</span><span>PHYSICAL</span></div><button class="quest-action" data-quest-action="physical" type="button">登上山頂 <span>→</span></button>
+            </article>
+            <article class="quest-card" id="quest-systems" data-quest="systems">
+              <div class="quest-card-top"><span class="quest-number">QUEST 06</span><span class="quest-status">AVAILABLE</span></div><h3>Error Observatory: Stay Online</h3><p>用小測驗檢查你能否把請求、路由、封包與回覆串成一次完整旅程。</p><div class="quest-meta"><span>+90 XP</span><span>SYSTEMS</span></div><button class="quest-action" data-quest-action="systems" type="button">接受考驗 <span>→</span></button>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <div class="section-rule" aria-hidden="true"><span>THE CITY IS A METAPHOR — THE PACKET IS REAL</span></div>
 
       <section class="simulation-layout" id="simulation" aria-label="PCIe city simulation">
@@ -77,7 +145,7 @@
         <div class="city-panel panel-surface">
           <div class="panel-heading">
             <div>
-              <p class="section-kicker">01 / 城市鳥瞰圖</p>
+              <p class="section-kicker">02 / 城市鳥瞰圖</p>
               <h2>Fabric Districts <span>·</span> Fabric 分區</h2>
             </div>
             <div class="map-tools">
@@ -169,7 +237,7 @@
 
         <aside class="inspector-column">
           <div class="inspector panel-surface" id="inspector">
-            <div class="panel-heading compact"><div><p class="section-kicker">02 / 節點檢視器</p><h2 id="inspector-title">Fabric Switch</h2></div><span class="online-chip"><i></i>ONLINE</span></div>
+            <div class="panel-heading compact"><div><p class="section-kicker">03 / 節點檢視器</p><h2 id="inspector-title">Fabric Switch</h2></div><span class="online-chip"><i></i>ONLINE</span></div>
             <p class="inspector-copy" id="inspector-copy">所有資料流在此交會。Switch 依照目的地與路由規則，將 TLP 封包送往正確的 Endpoint。</p>
             <div class="metric-grid">
               <div class="metric"><span>PORT STATE</span><strong id="port-state">L0 · ACTIVE</strong></div><div class="metric"><span>LINK WIDTH</span><strong id="link-width">x16</strong></div><div class="metric"><span>TX RATE</span><strong id="tx-rate">7.84 <small>GT/s</small></strong></div><div class="metric"><span>LATENCY</span><strong id="latency">112 <small>ns</small></strong></div>
@@ -177,8 +245,8 @@
             <div class="inspector-divider"></div>
             <div class="inspector-row"><span>ADDRESS</span><b class="mono" id="address">01:00.0</b></div><div class="inspector-row"><span>TRAFFIC CLASS</span><b id="traffic-class">TC0 · BEST EFFORT</b></div><div class="inspector-row"><span>FLOW CREDITS</span><b class="credit-value"><i id="credit-fill"></i><span id="credits">86%</span></b></div>
           </div>
-          <div class="activity panel-surface">
-            <div class="panel-heading compact"><div><p class="section-kicker">03 / 即時封包</p><h2>Packet Stream <span>·</span> TLP 流量</h2></div><span class="packet-count mono" id="packet-count">08</span></div>
+          <div class="activity panel-surface" id="activity">
+            <div class="panel-heading compact"><div><p class="section-kicker">04 / 即時封包</p><h2>Packet Stream <span>·</span> TLP 流量</h2></div><span class="packet-count mono" id="packet-count">08</span></div>
             <div class="packet-list" id="packet-list" aria-live="polite"></div>
           </div>
         </aside>
@@ -270,8 +338,8 @@
         <button class="text-btn lesson-jump" data-target="simulation" type="button">回到城市觀察 <span>↗</span></button>
       </section>
 
-      <section class="control-deck panel-surface">
-        <div class="control-heading"><p class="section-kicker">04 / 城市控制台</p><h2>Simulation controls</h2><p>調整這座 PCIe 城市的節奏。速度越快，封包流動越密集。</p></div>
+      <section class="control-deck panel-surface" id="control-deck">
+        <div class="control-heading"><p class="section-kicker">08 / 城市控制台</p><h2>Simulation controls</h2><p>調整這座 PCIe 城市的節奏。速度越快，封包流動越密集。</p></div>
         <div class="control-group speed-control"><div class="control-label"><span>SIMULATION SPEED</span><b id="speed-label">1.0×</b></div><input id="speed-range" type="range" min="0.5" max="2.5" value="1" step="0.5" aria-label="Simulation speed" /><div class="range-labels"><span>0.5×</span><span>2.5×</span></div></div>
         <div class="control-group mode-control"><div class="control-label"><span>TRAFFIC MODE</span></div><div class="mode-buttons" role="group" aria-label="Traffic mode"><button class="mode-btn active" data-mode="balanced" type="button">BALANCED</button><button class="mode-btn" data-mode="burst" type="button">BURST</button><button class="mode-btn" data-mode="quiet" type="button">QUIET</button></div></div>
         <div class="control-group fabric-health"><div class="control-label"><span>FABRIC LOAD</span><b id="load-label">64%</b></div><div class="load-bar"><i id="load-fill"></i></div><small>credits are circulating normally</small></div>

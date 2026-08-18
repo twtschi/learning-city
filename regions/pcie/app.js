@@ -251,7 +251,13 @@ function answerQuiz(answer) {
   quizAnswered = true;
   const question = quizQuestions[quizIndex];
   const correct = answer === question.answer;
-  if (correct) quizScore += 1;
+  if (correct) {
+    quizScore += 1;
+    if (!explorerState.quizAwards.includes(quizIndex)) {
+      explorerState.quizAwards.push(quizIndex);
+      awardXp(25);
+    }
+  }
   document.querySelectorAll('.quiz-option').forEach((option) => {
     const optionAnswer = Number(option.dataset.answer);
     option.disabled = true;
@@ -291,3 +297,85 @@ document.querySelectorAll('.term-jump').forEach((button) => button.addEventListe
   if (button.textContent.includes('TLP')) pulseButton.click();
 }));
 renderQuiz();
+
+const questConfig = {
+  topology: { label: 'GATE 00', name: 'Find the Root', target: 'simulation', node: 'root', xp: 40 },
+  transaction: { label: 'TLP MARKET', name: 'Deliver a Read', target: 'simulation', node: 'gpu', xp: 60, pulse: true },
+  flow: { label: 'CREDIT RESERVOIR', name: 'Keep Moving', target: 'control-deck', mode: 'burst', xp: 70 },
+  link: { label: 'REPLAY DOCK', name: 'Read the Receipt', target: 'activity', node: 'storage', xp: 55 },
+  physical: { label: 'EQUALIZATION SUMMIT', name: 'Climb the Layers', target: 'concepts', node: 'switch', xp: 65 },
+  systems: { label: 'ERROR OBSERVATORY', name: 'Stay Online', target: 'quiz', xp: 90 }
+};
+const explorerStorageKey = 'learning-city-pcie-explorer-v1';
+let explorerState = { xp: 120, visited: [], quizAwards: [], activeQuest: 'topology' };
+
+function loadExplorerState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(explorerStorageKey));
+    if (saved && typeof saved === 'object') return { ...explorerState, ...saved };
+  } catch (error) {
+    // Private browsing and file:// can deny storage; the session still works.
+  }
+  return explorerState;
+}
+function saveExplorerState() {
+  try { localStorage.setItem(explorerStorageKey, JSON.stringify(explorerState)); } catch (error) { /* no-op fallback */ }
+}
+function renderExplorer() {
+  const level = Math.floor(explorerState.xp / 100) + 1;
+  const rank = level >= 5 ? 'FABRIC GUARDIAN' : level >= 3 ? 'LINK RANGER' : 'FABRIC SCOUT';
+  const levelXp = explorerState.xp % 100;
+  document.querySelector('#player-level').textContent = String(level).padStart(2, '0');
+  document.querySelector('#player-rank').textContent = rank;
+  document.querySelector('#player-xp').textContent = `${explorerState.xp} / 500 XP`;
+  document.querySelector('#xp-fill').style.width = `${Math.min(100, levelXp)}%`;
+  document.querySelector('#quest-complete-count').textContent = `${explorerState.visited.length} / 6 QUESTS`;
+  document.querySelector('#badge-count').textContent = String(explorerState.visited.length + 1).padStart(2, '0');
+  const active = questConfig[explorerState.activeQuest];
+  document.querySelector('#active-quest-label').textContent = active.label;
+  document.querySelector('#active-quest-name').textContent = active.name;
+  document.querySelectorAll('.quest-card').forEach((card) => {
+    const done = explorerState.visited.includes(card.dataset.quest);
+    const status = card.querySelector('.quest-status');
+    card.classList.toggle('completed', done);
+    status.classList.toggle('complete', done);
+    status.textContent = done ? 'CLEARED' : card.dataset.quest === explorerState.activeQuest ? 'NEXT' : 'AVAILABLE';
+  });
+  document.querySelectorAll('.quest-node').forEach((node) => {
+    const id = [...node.classList].find((name) => name.startsWith('node-'))?.replace('node-', '');
+    node.classList.toggle('visited', explorerState.visited.includes(id));
+    node.classList.toggle('active', id === explorerState.activeQuest);
+  });
+}
+function awardXp(amount) {
+  explorerState.xp = Math.min(500, explorerState.xp + amount);
+  saveExplorerState();
+  renderExplorer();
+}
+function focusQuest(id, scroll = true) {
+  const config = questConfig[id];
+  if (!config) return;
+  explorerState.activeQuest = id;
+  document.querySelectorAll('.quest-card').forEach((card) => card.classList.toggle('selected', card.dataset.quest === id));
+  renderExplorer();
+  if (config.node) selectDistrict(config.node);
+  if (config.mode) document.querySelector(`[data-mode="${config.mode}"]`)?.click();
+  if (config.pulse) pulseButton.click();
+  if (scroll) document.querySelector(`#${config.target}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+function discoverQuest(id) {
+  if (!explorerState.visited.includes(id)) {
+    explorerState.visited.push(id);
+    awardXp(questConfig[id].xp);
+  }
+  saveExplorerState();
+  focusQuest(id);
+}
+document.querySelectorAll('.quest-action').forEach((button) => button.addEventListener('click', () => discoverQuest(button.dataset.questAction)));
+document.querySelectorAll('.quest-card').forEach((card) => card.addEventListener('click', (event) => {
+  if (event.target.closest('.quest-action')) return;
+  focusQuest(card.dataset.quest, false);
+}));
+explorerState = loadExplorerState();
+renderExplorer();
+focusQuest(explorerState.activeQuest, false);
