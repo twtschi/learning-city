@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
 </head>
 <body>
   <div class="page-shell">
@@ -54,14 +54,15 @@
             <div class="profile-kicker"><span>LINK WALKER</span><i></i><span>初學者職業</span></div>
             <h2>Protocol Explorer</h2>
             <p>你的任務不是背完所有縮寫，而是沿著封包走過每一層。</p>
-            <div class="xp-label"><span>EXPLORATION XP</span><b id="player-xp">120 / 500 XP</b></div>
+            <div class="xp-label"><span>VERIFIED XP</span><b id="player-xp">0 / 500 XP</b></div>
             <div class="xp-bar"><i id="xp-fill"></i></div>
           </div>
           <div class="profile-rank"><span>RANK</span><strong id="player-rank">FABRIC SCOUT</strong><small id="quest-complete-count">0 / 6 QUESTS</small></div>
         </div>
         <div class="explorer-inventory panel-surface">
           <p class="section-kicker">EXPLORER LOG</p>
-          <div class="inventory-row"><span>DISCOVERED</span><b id="badge-count">01</b><small>district badge</small></div>
+          <div class="inventory-row"><span>VERIFIED</span><b id="badge-count">00</b><small>district badges</small></div>
+          <div class="inventory-row"><span>REVIEW QUEUE</span><b id="review-count">00</b><small>concepts to revisit</small></div>
           <div class="inventory-row"><span>ACTIVE QUEST</span><b id="active-quest-label">GATE 00</b><small id="active-quest-name">Find the Root</small></div>
         </div>
       </section>
@@ -86,6 +87,26 @@
             <span class="journey-number">03</span>
             <div><h3>我真的學會了嗎？</h3><p>用五題小測驗檢查自己能不能讀懂一個 PCIe 拓撲。</p><button class="mini-link lesson-jump" data-target="quiz" type="button">開始小測驗 <span>↗</span></button></div>
           </article>
+        </div>
+      </section>
+      <section class="course-brief panel-surface" id="course-brief" aria-labelledby="course-brief-title">
+        <div class="course-brief-copy">
+          <p class="section-kicker">00A / 學習契約 · COURSE BRIEF</p>
+          <h2 id="course-brief-title">這一區會帶你到哪裡？</h2>
+          <p>這是 PCIe 的互動入門，不是完整規格課。完成本區後，你應該能讀懂一張基礎拓撲、說清楚一筆讀取交易的去回，並知道下一步該到實機與公開技術資料驗證什麼。</p>
+        </div>
+        <dl class="course-facts">
+          <div><dt>前置知識</dt><dd>不用；會使用電腦即可</dd></div>
+          <div><dt>建議時間</dt><dd>90–120 分鐘</dd></div>
+          <div><dt>驗收方式</dt><dd>任務證據 + 5 題測驗</dd></div>
+        </dl>
+        <div class="course-outcomes">
+          <p>完成後能夠</p>
+          <ul>
+            <li>畫出 Root Complex、Switch 與 Endpoint 的關係。</li>
+            <li>解釋 MRd 請求和 Completion 回覆各自的工作。</li>
+            <li>判讀 Link Width、Gen 與協商後連線狀態的基本差異。</li>
+          </ul>
         </div>
       </section>
 
@@ -134,6 +155,32 @@
             <article class="quest-card" id="quest-systems" data-quest="systems">
               <div class="quest-card-top"><span class="quest-number">QUEST 06</span><span class="quest-status">AVAILABLE</span></div><h3>Error Observatory: Stay Online</h3><p>用小測驗檢查你能否把請求、路由、封包與回覆串成一次完整旅程。</p><div class="quest-meta"><span>+90 XP</span><span>SYSTEMS</span></div><button class="quest-action" data-quest-action="systems" type="button">接受考驗 <span>→</span></button>
             </article>
+          </div>
+        </div>
+      </section>
+      <section class="mission-proof panel-surface" id="mission-proof" aria-labelledby="mission-proof-title">
+        <div class="mission-proof-heading">
+          <div>
+            <p class="section-kicker">01A / 任務驗收 · EVIDENCE GATE</p>
+            <h2 id="mission-proof-title">先留下證據，再領取 XP。</h2>
+          </div>
+          <span class="mission-state" id="mission-state">準備開始</span>
+        </div>
+        <div class="mission-proof-grid">
+          <div class="mission-brief">
+            <span class="mission-code" id="mission-code">GATE 00</span>
+            <h3 id="mission-title">Find the Root</h3>
+            <p id="mission-objective">找到 Root Complex，確認它如何把 CPU／記憶體世界接進 PCIe Fabric。</p>
+            <button class="primary-btn" id="mission-target" type="button">前往觀察點 <span>→</span></button>
+          </div>
+          <div class="mission-evidence-wrap">
+            <p class="proof-label">OBSERVATION LOG</p>
+            <ul class="mission-evidence" id="mission-evidence"></ul>
+            <p class="proof-label">EXIT QUESTION</p>
+            <h3 class="mission-question" id="mission-question"></h3>
+            <div class="mission-options" id="mission-options"></div>
+            <p class="mission-feedback" id="mission-feedback" aria-live="polite"></p>
+            <button class="mission-complete primary-btn" id="mission-complete" type="button" disabled>證據不足 <span>→</span></button>
           </div>
         </div>
       </section>
@@ -331,6 +378,37 @@
           </div>
         </aside>
       </section>
+      <section class="scenario-lab panel-surface" id="scenario-lab" aria-labelledby="scenario-title">
+        <div class="learning-heading scenario-heading">
+          <div>
+            <p class="section-kicker">07A / 實務情境 · PRACTICE LAB</p>
+            <h2 id="scenario-title">把城市地圖接到真實輸出。</h2>
+          </div>
+          <p>這些是固定案例，不是即時硬體量測。先判讀，再把答案接回 PCIe 的拓撲與協商概念。</p>
+        </div>
+        <div class="scenario-grid" id="scenario-grid"></div>
+      </section>
+
+      <section class="professional-route" id="professional-route" aria-labelledby="professional-route-title">
+        <div class="learning-heading">
+          <div>
+            <p class="section-kicker">07B / 下一站 · PROFESSIONAL ROUTE</p>
+            <h2 id="professional-route-title">入門結束後，才開始練專業。</h2>
+          </div>
+          <p>不要把城市動畫當成實機分析。本區先建立詞彙和路徑；下一步要用規格、工具與可重播案例驗證。</p>
+        </div>
+        <ol class="route-stages">
+          <li><span>01</span><div><h3>基礎：枚舉與設定空間</h3><p>理解 BDF、Configuration Space、BAR、Memory Read／Write；練習判讀簡化的 <code>lspci -vv</code>。</p></div></li>
+          <li><span>02</span><div><h3>實務：鏈路與錯誤</h3><p>比較 LnkCap、LnkCtl、LnkSta；再認識 ASPM、AER、MPS／MRRS 與 IOMMU 的實際診斷位置。</p></div></li>
+          <li><span>03</span><div><h3>進階：協定與效能</h3><p>進入 Transaction、Data Link、Physical Layer、ordering、flow control、bandwidth，對照一次可重播的效能或錯誤案例。</p></div></li>
+        </ol>
+        <aside class="source-dock" aria-label="PCIe technical sources">
+          <p>PUBLIC TECHNICAL SOURCES</p>
+          <a href="https://pcisig.com/what-pci-express-pcie-architecture" target="_blank" rel="noreferrer">PCI-SIG · PCI Express architecture <span>↗</span></a>
+          <a href="https://pcisig.com/specification-overview/pci-express-base" target="_blank" rel="noreferrer">PCI-SIG · Base specification overview <span>↗</span></a>
+          <a href="https://docs.kernel.org/PCI/pcieaer-howto.html" target="_blank" rel="noreferrer">Linux kernel · PCIe AER how-to <span>↗</span></a>
+        </aside>
+      </section>
 
       <section class="lesson-note panel-surface" aria-label="Learning note">
         <span class="note-mark">NOTE / 00</span>
@@ -343,10 +421,11 @@
         <div class="control-group speed-control"><div class="control-label"><span>SIMULATION SPEED</span><b id="speed-label">1.0×</b></div><input id="speed-range" type="range" min="0.5" max="2.5" value="1" step="0.5" aria-label="Simulation speed" /><div class="range-labels"><span>0.5×</span><span>2.5×</span></div></div>
         <div class="control-group mode-control"><div class="control-label"><span>TRAFFIC MODE</span></div><div class="mode-buttons" role="group" aria-label="Traffic mode"><button class="mode-btn active" data-mode="balanced" type="button">BALANCED</button><button class="mode-btn" data-mode="burst" type="button">BURST</button><button class="mode-btn" data-mode="quiet" type="button">QUIET</button></div></div>
         <div class="control-group fabric-health"><div class="control-label"><span>FABRIC LOAD</span><b id="load-label">64%</b></div><div class="load-bar"><i id="load-fill"></i></div><small>credits are circulating normally</small></div>
+        <p class="simulation-disclaimer">SIMULATION NOTICE · 封包、延遲、負載與 Credits 均為教學模擬值，不代表這台電腦的實際 PCIe 量測。</p>
       </section>
     </main>
     <footer class="footer"><span>LEARNING CITY / REGION 03 · PCIe FABRIC</span><span class="mono">BUILD 03.0.0 · <a href="https://github.com/twtschi/learning-city" target="_blank" rel="noreferrer">GITHUB PAGES READY ↗</a></span></footer>
   </div>
-  <script src="app.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
