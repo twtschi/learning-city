@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#102326" />
+  <title>Learning City / AI Coding Region</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="rail">
+      <a class="brand" href="../../index.html"><span class="brand-mark"><i></i><i></i><i></i></span><span>LEARNING CITY</span></a>
+      <div class="rail-label">WEEK 01 · LLM 是什麼運算元件</div>
+      <nav class="steps" id="steps" aria-label="課程章節"></nav>
+      <div class="rail-foot">PROGRESS <b id="progress">0 / 5</b><br />目標：Staff AI Coding Engineer 面試<br /><button class="reset" id="reset" type="button">重設進度</button></div>
+    </aside>
+
+    <main class="main" id="main">
+      <header class="topbar">
+        <span>REGION · <b>AI CODING</b> · 12 週面試課程</span>
+        <button class="link-btn" id="open-roadmap" type="button">12 週地圖 ↗</button>
+      </header>
+      <article class="lesson" id="lesson"></article>
+    </main>
+  </div>
+
+  <dialog id="roadmap">
+    <div class="modal">
+      <p class="turn">ROADMAP · 12 WEEKS</p>
+      <h2>Staff AI Coding 面試課程</h2>
+      <p class="muted">每週節奏：2 天讀概念、3 天做專案、1 天模擬面試題。目前只開放第 1 週。</p>
+      <ol class="roadmap-list" id="roadmap-list"></ol>
+      <div class="modal-foot"><button class="btn ghost" id="close-roadmap" type="button">關閉</button></div>
+    </div>
+  </dialog>
+  <script src="app.js"></script>
+</body>
+</html>
