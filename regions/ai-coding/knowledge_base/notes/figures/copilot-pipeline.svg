@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>IDE 助手的一次請求：前處理、模型、後處理</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12.5px}.s{fill:#9db4ac;font-size:10.5px}
+    .box{fill:#143034;stroke:#9db4ac;stroke-opacity:.55}.model{fill:#1d4b4b;stroke:#b9f06d}.arrow{stroke:#9db4ac;stroke-width:1.5;fill:none}
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9db4ac"/></marker></defs>
+  <text class="s" x="20" y="22">去程（你的請求）</text>
+  <rect class="box" x="20" y="32" width="120" height="62" rx="4"/><text class="t" x="80" y="56" text-anchor="middle">編輯器</text><text class="s" x="80" y="72" text-anchor="middle">收集 context</text><text class="s" x="80" y="85" text-anchor="middle">游標前後、分頁…</text>
+  <path class="arrow" d="M140 63H172" marker-end="url(#a)"/>
+  <rect class="box" x="172" y="32" width="120" height="62" rx="4"/><text class="t" x="232" y="56" text-anchor="middle">代理 / 過濾</text><text class="s" x="232" y="72" text-anchor="middle">擋惡意操控</text><text class="s" x="232" y="85" text-anchor="middle">毒性與個資過濾</text>
+  <path class="arrow" d="M292 63H324" marker-end="url(#a)"/>
+  <rect class="model" x="324" y="32" width="120" height="62" rx="4"/><text class="t" x="384" y="68" text-anchor="middle">模型</text>
+  <text class="s" x="470" y="22">回程（模型的輸出）</text>
+  <path class="arrow" d="M444 63H476" marker-end="url(#a)"/>
+  <rect class="box" x="476" y="32" width="120" height="62" rx="4"/><text class="t" x="536" y="56" text-anchor="middle">輸出過濾</text><text class="s" x="536" y="72" text-anchor="middle">毒性、個資</text><text class="s" x="536" y="85" text-anchor="middle">品質與安全檢查</text>
+  <path class="arrow" d="M596 63H628" marker-end="url(#a)"/>
+  <rect class="box" x="628" y="32" width="72" height="62" rx="4"/><text class="t" x="664" y="60" text-anchor="middle">建議</text><text class="s" x="664" y="76" text-anchor="middle">回到編輯器</text>
+  <rect x="20" y="124" width="680" height="1" fill="#9db4ac" fill-opacity=".25"/>
+  <text class="t" x="20" y="152">你看到的「建議」＝ context 蒐集 + 前處理 + 模型 + 後處理</text>
+  <text class="s" x="20" y="176">• 比較兩個工具時，差別常常不在模型，而在送進去的 context 與前後處理。</text>
+  <text class="s" x="20" y="194">• 公開程式碼比對是「可選」的管理設定（依書中描述），不是每個方案都有。</text>
+  <text class="s" x="20" y="212">• 這張圖依書中對 Copilot 的描述簡化而成；各家實作細節不同，且會隨版本改變。</text>
+  <text class="s" x="20" y="244">延伸思考：換一個工具時，你比較的是模型，還是 context 管線？</text>
+</svg>

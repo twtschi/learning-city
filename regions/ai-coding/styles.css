@@ -100,7 +100,7 @@ code, .mono { font-family:var(--mono); font-size:.88em; color:var(--mint); }
 .answer:disabled { cursor:default; }
 .feedback { margin:14px 0 0; font-size:13px; line-height:1.8; color:var(--muted); }
 .feedback.ok { color:var(--mint); }
-.interview { margin-top:30px; }
+.practice { margin-top:30px; }
 .reveal { margin-top:12px; padding:14px 16px; border:1px dashed var(--mint); background:rgba(185,240,109,.06); }
 .reveal ul { margin:6px 0 0; padding-left:20px; }
 .nav-row { display:flex; justify-content:space-between; margin-top:40px; }
@@ -131,3 +131,41 @@ dialog::backdrop { background:rgba(3,13,15,.78); }
   .seq-step { grid-template-columns:1fr; gap:2px; }
 }
 @media (prefers-reduced-motion:reduce) { * { transition:none!important; scroll-behavior:auto!important; } }
+
+/* ---------- knowledge-base content ---------- */
+.week-label { margin:14px 0 4px; padding:0 7px; color:var(--muted); font:9px/1.5 var(--mono); letter-spacing:.12em; }
+.week-label:first-child { margin-top:0; }
+.steps .step { min-height:34px; }
+h3 { margin:28px 0 8px; font:700 17px/1.4 var(--serif); }
+h4 { margin:22px 0 6px; font:700 14px/1.4 var(--sans); color:var(--sky); }
+.srcline { margin:10px 0 0; color:var(--muted); font:11px/1.7 var(--mono); }
+.lesson ul, .lesson ol { padding-left:22px; }
+.lesson li ul { margin:2px 0 4px; }
+
+figure { margin:0; }
+figure.fig { margin:22px 0; border:1px solid var(--line); background:rgba(0,0,0,.22); }
+figure.fig img { display:block; width:100%; height:auto; }
+figure.fig figcaption { padding:8px 12px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.6; }
+
+figure.code { margin:18px 0; border:1px solid var(--line); background:#06141a; }
+figure.code figcaption { display:flex; justify-content:space-between; align-items:center; padding:5px 10px; border-bottom:1px solid var(--line); color:var(--muted); font:9px var(--mono); letter-spacing:.12em; text-transform:uppercase; }
+figure.code .copy { padding:2px 8px; border:1px solid var(--line); color:var(--muted); background:transparent; font:9px var(--mono); letter-spacing:.08em; }
+figure.code .copy:hover { color:var(--bg, #081217); background:var(--mint); border-color:var(--mint); }
+figure.code pre { margin:0; padding:12px 14px; overflow:auto; }
+figure.code code { color:#d6e8c8; font:12px/1.7 var(--mono); white-space:pre; }
+.lesson p code, .lesson li code, .lesson td code { padding:1px 5px; background:rgba(185,240,109,.1); border-radius:2px; }
+
+.table-wrap { margin:18px 0; overflow:auto; border:1px solid var(--line); }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th, td { padding:8px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; line-height:1.65; color:#cfe0d9; }
+th { color:var(--sky); font:500 10px var(--mono); letter-spacing:.08em; background:rgba(0,0,0,.2); }
+tr:last-child td { border-bottom:0; }
+
+.readings { margin-top:44px; }
+details.reading { margin:8px 0; border:1px solid var(--line); background:var(--panel); }
+details.reading summary { display:flex; justify-content:space-between; gap:12px; padding:12px 16px; cursor:pointer; font-weight:700; font-size:14px; }
+details.reading summary .meta { color:var(--muted); font:10px var(--mono); font-weight:400; white-space:nowrap; align-self:center; }
+details.reading[open] summary { border-bottom:1px solid var(--line); }
+details.reading > :not(summary) { margin-left:16px; margin-right:16px; }
+details.reading > :last-child { margin-bottom:16px; }
+details.reading h2 { font-size:17px; }

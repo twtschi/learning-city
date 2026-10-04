@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>生成、執行、觀察、修正的迴圈與人工介入點</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12.5px}.s{fill:#9db4ac;font-size:10.5px}
+    .box{fill:#143034;stroke:#9db4ac;stroke-opacity:.6}.ai{fill:#1d4b4b;stroke:#b9f06d}.hum{fill:#3a1f1a;stroke:#fc8268}.arrow{stroke:#9db4ac;stroke-width:1.5;fill:none}
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9db4ac"/></marker><marker id="r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#fc8268"/></marker></defs>
+  <g class="t" text-anchor="middle">
+    <rect class="ai" x="30" y="40" width="130" height="56" rx="4"/><text x="95" y="64">① 生成</text><text class="s" x="95" y="82">提出程式碼或 patch</text>
+    <rect class="box" x="240" y="40" width="130" height="56" rx="4"/><text x="305" y="64">② 執行</text><text class="s" x="305" y="82">測試、型別、linter</text>
+    <rect class="box" x="450" y="40" width="130" height="56" rx="4"/><text x="515" y="64">③ 觀察結果</text><text class="s" x="515" y="82">失敗訊息、diff</text>
+    <rect class="ai" x="450" y="170" width="130" height="56" rx="4"/><text x="515" y="194">④ 修正</text><text class="s" x="515" y="212">讀錯誤、改 patch</text>
+    <rect class="hum" x="150" y="170" width="190" height="56" rx="4"/><text x="245" y="194">人工介入點</text><text class="s" x="245" y="212">AI 卡住或方向錯了，人接手</text>
+  </g>
+  <path class="arrow" d="M160 68H240M370 68H450" marker-end="url(#a)"/>
+  <path class="arrow" d="M515 96V170" marker-end="url(#a)"/>
+  <path class="arrow" d="M450 198H340" marker-end="url(#r)" stroke="#fc8268" stroke-dasharray="5 4"/>
+  <path class="arrow" d="M450 205C380 250 60 250 60 100" marker-end="url(#a)"/>
+  <text class="s" x="200" y="246">修正後回到 ① 重來</text>
+  <text class="s" x="30" y="22">每個箭頭都是可以被記錄與度量的事件：重試次數、介入次數、每次介入的原因</text>
+  <text class="s" x="30" y="266">這份「介入紀錄」就是規則檔、hooks 與 eval 案例最好的素材。</text>
+</svg>

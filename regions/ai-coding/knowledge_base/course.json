@@ -1,0 +1,18 @@
+{
+  "_comment": "Course frame read by the build tool and shipped in the catalog. Week titles are looked up here; a note whose week is not listed still works and shows as 'WEEK N'. core_lessons are the hand-built interactive lessons in app.js that notes may attach to.",
+  "weeks": {
+    "1": "LLM 是什麼運算元件",
+    "2": "AI 協作開發工作流",
+    "3": "Context Engineering",
+    "4": "從零寫 coding agent",
+    "5": "MCP 與工具生態",
+    "6": "安全與可靠性",
+    "7": "多 agent 與長時間任務",
+    "8": "設計 eval",
+    "9": "Eval 驅動迭代",
+    "10": "推論系統與效能",
+    "11": "系統設計模擬",
+    "12": "綜合演練"
+  },
+  "core_lessons": ["tokens", "sampling", "inference", "caching", "toolbox"]
+}

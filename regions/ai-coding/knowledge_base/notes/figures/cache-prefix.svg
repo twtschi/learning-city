@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 270" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>前綴快取：第一個不同的位置之後全部失效</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12px}.s{fill:#9db4ac;font-size:10.5px}.m{font-family:'DM Mono',Consolas,monospace;font-size:10.5px;fill:#08181b}
+  </style>
+  <text class="t" x="20" y="22">好的排列：穩定的在前，易變的在後</text>
+  <g>
+    <rect x="20"  y="32" width="120" height="30" fill="#3f7c86"/><text class="m" x="28" y="51">工具定義</text>
+    <rect x="144" y="32" width="120" height="30" fill="#3f7c86"/><text class="m" x="152" y="51">system prompt</text>
+    <rect x="268" y="32" width="150" height="30" fill="#3f7c86"/><text class="m" x="276" y="51">歷史對話（逐輪增加）</text>
+    <rect x="422" y="32" width="120" height="30" fill="#e6c86e"/><text class="m" x="430" y="51">本輪新訊息</text>
+    <rect x="546" y="32" width="100" height="30" fill="#e6c86e"/><text class="m" x="554" y="51">時間戳</text>
+  </g>
+  <rect x="20" y="66" width="398" height="6" fill="#b9f06d"/><text class="s" x="20" y="88">↑ 與上一輪逐 token 相同的前綴 → 快取命中（便宜、快）</text>
+  <text class="s" x="422" y="88">↑ 只有新增部分需要處理</text>
+  <rect x="20" y="108" width="680" height="1" fill="#9db4ac" fill-opacity=".25"/>
+  <text class="t" x="20" y="136">壞的排列：把時間戳放在最前面</text>
+  <g>
+    <rect x="20"  y="146" width="100" height="30" fill="#8d4a3b"/><text class="m" x="28" y="165" style="fill:#fff">時間戳</text>
+    <rect x="124" y="146" width="120" height="30" fill="#3f7c86" fill-opacity=".45"/><text class="m" x="132" y="165" style="fill:#e9f0e7">工具定義</text>
+    <rect x="248" y="146" width="120" height="30" fill="#3f7c86" fill-opacity=".45"/><text class="m" x="256" y="165" style="fill:#e9f0e7">system prompt</text>
+    <rect x="372" y="146" width="150" height="30" fill="#3f7c86" fill-opacity=".45"/><text class="m" x="380" y="165" style="fill:#e9f0e7">歷史對話</text>
+    <rect x="526" y="146" width="120" height="30" fill="#e6c86e" fill-opacity=".45"/><text class="m" x="534" y="165" style="fill:#e9f0e7">本輪新訊息</text>
+  </g>
+  <text class="s" x="20" y="200">↑ 第一個 token 就和上一輪不同 → 後面全部無法重用，每輪都付「寫入」的溢價</text>
+  <text class="s" x="20" y="236">對策：易變資訊放最後；工具清單順序固定；不要在歷史中途插入或刪除訊息。</text>
+  <text class="s" x="20" y="254">監控：快取命中率突然下降，幾乎都是有人改動了前綴。</text>
+</svg>

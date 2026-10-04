@@ -15,7 +15,7 @@ const ROADMAP = [
   ['W09', 'Eval 驅動迭代：error analysis、judge 校準'],
   ['W10', '推論系統：KV cache、batching、量化、llama.cpp'],
   ['W11', '系統設計模擬 ×4'],
-  ['W12', '完整面試 loop 模擬'],
+  ['W12', '綜合演練'],
 ];
 
 /* ---------- lessons ---------- */
@@ -39,7 +39,7 @@ LESSONS.push({
       <li><strong>容納得下</strong>：20 萬 token 可以塞進去。</li>
       <li><strong>用得好</strong>：塞得越滿，模型越可能漏掉中間的細節、被無關內容干擾。長 context 下的檢索品質通常會隨長度與位置而變化，這點必須用你自己的任務去量，不能只信規格表。</li>
     </ul>
-    <div class="callout warn"><p>「context 夠大，整個 repo 丟進去就好」是 junior 的答案。Staff 的答案是：context 是稀缺預算，要決定放什麼、什麼時候壓縮、什麼交給 subagent。這是第 3 週的主題。</p></div>
+    <div class="callout warn"><p>「context 夠大，整個 repo 丟進去就好」是常見的誤解。比較成熟的做法是：context 是稀缺預算，要決定放什麼、什麼時候壓縮、什麼交給 subagent。這是第 3 週的主題。</p></div>
 
     <h2>1.2 動手：感受 token 數</h2>
     <div class="lab">
@@ -88,8 +88,8 @@ for (auto& x : v) { total += x; }
     ],
     explain: '模型本身無狀態，權重在推論時不會改變。「記憶」來自 harness 每輪重送歷史。這也是為什麼 context 管理（截斷、摘要、檢索）是 agent 工程的核心，而且每輪重送也是 prompt caching 存在的原因（Lesson 4）。',
   },
-  interview: {
-    q: '面試題：為什麼不能「把整個 repo 丟進 context」就解決 coding agent 的問題？',
+  practice: {
+    q: '思考題：為什麼不能「把整個 repo 丟進 context」就解決 coding agent 的問題？',
     ref: ['成本與延遲：每輪都要重送並重新處理（即使有快取，仍有讀取成本）。', '品質：context 越長，關鍵資訊越可能被稀釋；要用自己的任務量測，不能只信規格。', '規模：大型 monorepo 根本放不下，必須做檢索（grep / AST / LSP）。', '更新性：程式碼在變，靜態塞入的內容會過期；讓 agent 按需讀取更可靠。', '結論：把 context 當預算管理，並用 eval 驗證策略。'],
   },
 });
@@ -167,8 +167,8 @@ LESSONS.push({
     ],
     explain: '浮點運算順序、batching、並行歸約等會讓近似平手的 token 翻轉。工程上的結論是：把 agent 當成隨機系統，用多次試驗與統計方法評估，並在系統層加上驗證（跑測試）而不是期待重現。',
   },
-  interview: {
-    q: '面試題：Coding agent 該用多高的 temperature？為什麼？',
+  practice: {
+    q: '思考題：Coding agent 該用多高的 temperature？為什麼？',
     ref: ['沒有放諸四海皆準的答案，先講原則：需要精確、可驗證的產出（改 code）偏低；需要多樣性（brainstorm、產生多個候選再挑）偏高。', '更重要的是：把「可靠性」建在驗證層（測試、型別檢查、linter），不要靠把 temperature 壓到 0。', '若採 best-of-N 策略，反而需要適度 temperature 來產生多樣候選，再用測試挑選。', '用 eval 決定參數：在你的任務集上掃參數、看通過率與成本，而不是憑感覺。'],
   },
 });
@@ -242,8 +242,8 @@ LESSONS.push({
     ],
     explain: 'batch = 1 的 decode 算術強度極低，時間約等於「讀權重的時間」。INT4 讓權重位元組縮為約 1/4，頻寬受限的時間隨之縮短。參數個數沒變，也不是因為乘法更快（雖然低精度運算單元也可能有加成，但主因是頻寬）。',
   },
-  interview: {
-    q: '面試題：用一句話與一個數字，解釋為什麼 LLM 服務要做 continuous batching？',
+  practice: {
+    q: '思考題：用一句話與一個數字，解釋為什麼 LLM 服務要做 continuous batching？',
     ref: ['Decode 是 memory-bound：每步都要讀整份權重，batch=1 時算力幾乎閒置。', '把多個請求湊成一批，讀一次權重服務多個請求，吞吐近似隨 batch 線性成長，直到轉為 compute-bound（脊點）。', 'Continuous（in-flight）batching 讓請求隨時加入、完成就退出，避免傳統 static batching 等最慢請求的浪費。', '代價：單一請求延遲可能上升、KV cache 記憶體成為上限，需要做排程取捨。'],
   },
 });
@@ -327,8 +327,8 @@ LESSONS.push({
     ],
     explain: '前綴比對從第一個 token 開始，第一個不同處之後全部失效。解法：把易變資訊放到最後（例如附在最新的 user 訊息），讓穩定部分維持位元組級相同。順帶：不要在中途重排工具清單，這也會破壞前綴。',
   },
-  interview: {
-    q: '面試題：為什麼 agent 的 system prompt 與工具定義不該每一輪都動？上線後你會監控什麼指標？',
+  practice: {
+    q: '思考題：為什麼 agent 的 system prompt 與工具定義不該每一輪都動？上線後你會監控什麼指標？',
     ref: ['前綴快取：只要前綴逐 token 相同就能重用，任何變動都使其後內容失效。', '把穩定內容放前面、易變內容放最後；工具清單排序固定；動態資訊以附加訊息方式注入。', '監控：快取命中率（讀取 token ÷ 總輸入 token）、每任務成本、首 token 延遲（TTFT）。命中率突然下降是 prompt 變動 bug 的強訊號。', '要把「prompt 變更」當作需要 review 與 eval 的程式碼變更：它同時影響品質與成本。'],
   },
 });
@@ -387,90 +387,161 @@ LESSONS.push({
       ['API 供應商，會自動過濾所有危險路徑', 0],
       ['使用者，應該在 prompt 裡叮嚀模型不要這樣做', 0],
     ],
-    explain: 'Prompt 裡的叮嚀只是「請求」，不是安全邊界。真正的邊界在 harness 與 sandbox：路徑白名單、唯讀掛載、網路隔離、權限提示。這就是 Staff 等級與 Senior 的分界之一：用系統設計而非祈禱來保證安全。',
+    explain: 'Prompt 裡的叮嚀只是「請求」，不是安全邊界。真正的邊界在 harness 與 sandbox：路徑白名單、唯讀掛載、網路隔離、權限提示。成熟的做法是用系統設計，而不是祈禱，來保證安全。',
   },
-  interview: {
-    q: '面試題：描述一次完整的 tool call 往返，並說明參數不合 schema 時系統該怎麼做。',
+  practice: {
+    q: '思考題：描述一次完整的 tool call 往返，並說明參數不合 schema 時系統該怎麼做。',
     ref: ['請求帶工具定義 → 模型回傳 tool_use 區塊 → harness 驗證並執行 → 以 tool_result 回送 → 模型繼續；直到 end_turn。', '模型不執行任何東西；harness 負責驗證、授權、執行、限額與終止條件。', '參數錯誤：harness 端一律再驗證，失敗就回傳具體、可行動的錯誤訊息（說明哪個欄位、期望什麼），讓模型重試；並設定重試上限，避免死循環。', '補充：記錄每次工具呼叫與結果，供之後的 eval 與除錯。'],
   },
 });
 
-/* ---------- state & rendering ---------- */
-const KEY = 'learning-city:ai-coding:w1:v1';
+/* ---------- the course: interactive lessons + whatever the knowledge-base catalog provides ---------- */
+/* Nothing below names a specific note. Add a note under knowledge_base/notes/, rebuild the
+ * catalog, and the rail, the progress totals and the home-page city all follow. */
+LESSONS.forEach((l) => { l.week = 1; l.order = 0; });
+
+const catalog = LC.catalog || { notes: [], weeks: {}, sources: [] };
+const sourceTitle = (id) => (catalog.sources.find((x) => x.id === id) || {}).title || id;
+
+const noteLesson = (meta) => ({ id: `kb:${meta.id}`, noteId: meta.id, title: meta.title, week: meta.week, order: meta.order, minutes: meta.minutes, source: meta.source, fromNote: true, init() {} });
+const COURSE = [...LESSONS, ...catalog.notes.filter((n) => n.kind === 'lesson').map(noteLesson)]
+  .sort((a, b) => a.week - b.week || Number(!!a.fromNote) - Number(!!b.fromNote) || a.order - b.order);
+
+const attachedTo = (L) => catalog.notes.filter((n) => n.kind === 'deepdive' && n.attach === (L.fromNote ? L.noteId : L.id)).sort((a, b) => a.order - b.order);
+const weekTitle = (w) => catalog.weeks[String(w)] || (ROADMAP[w - 1] && ROADMAP[w - 1][1]) || '';
+
+/* ---------- state ---------- */
+const KEY = 'learning-city:ai-coding:v2';
+const LEGACY_KEY = 'learning-city:ai-coding:w1:v1';
+const blank = () => ({ index: 0, answers: {}, drafts: {}, picked: {} });
 let state;
-try { state = { index: 0, answers: {}, drafts: {}, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch { state = { index: 0, answers: {}, drafts: {} }; }
+try {
+  const raw = localStorage.getItem(KEY) || localStorage.getItem(LEGACY_KEY);
+  state = { ...blank(), ...(raw ? JSON.parse(raw) : {}) };
+} catch { state = blank(); }
+state.index = Math.min(state.index || 0, COURSE.length - 1);
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* storage may be unavailable */ } };
 
+/* ---------- rendering ---------- */
 function renderSteps() {
-  const done = LESSONS.filter((l) => state.answers[l.id] !== undefined).length;
-  $('#progress').textContent = `${done} / ${LESSONS.length}`;
-  $('#steps').innerHTML = LESSONS.map((l, i) => `<button class="step ${i === state.index ? 'active' : ''} ${state.answers[l.id] === 1 ? 'done' : ''}" data-i="${i}" type="button"><span>${state.answers[l.id] === 1 ? '✓' : String(i + 1).padStart(2, '0')}</span>${l.title}</button>`).join('');
+  const done = COURSE.filter((l) => state.answers[l.id] === 1).length;
+  $('#progress').textContent = `${done} / ${COURSE.length}`;
+  let lastWeek = null;
+  $('#steps').innerHTML = COURSE.map((l, i) => {
+    const header = l.week !== lastWeek ? `<div class="week-label">WEEK ${String(l.week).padStart(2, '0')} · ${esc(weekTitle(l.week))}</div>` : '';
+    lastWeek = l.week;
+    const ok = state.answers[l.id] === 1;
+    return `${header}<button class="step ${i === state.index ? 'active' : ''} ${ok ? 'done' : ''}" data-i="${i}" type="button"><span>${ok ? '✓' : String(i + 1).padStart(2, '0')}</span>${esc(l.title)}</button>`;
+  }).join('');
+  const active = $('.step.active');
+  if (active && active.scrollIntoView) active.scrollIntoView({ block: 'nearest' });
 }
 
-function renderLesson() {
-  const L = LESSONS[state.index];
+let renderSeq = 0;
+async function renderLesson() {
+  const seq = ++renderSeq;
+  const L = COURSE[state.index];
   const root = $('#lesson');
+  const wanted = [...(L.fromNote ? [L.noteId] : []), ...attachedTo(L).map((n) => n.id)];
+  await Promise.all(wanted.map((id) => LC.loadNote(id).catch(() => null)));
+  if (seq !== renderSeq) return;                         // a newer navigation won
+
+  const note = L.fromNote ? LC.notes[L.noteId] : null;
+  const quiz = L.quiz || (note && note.quiz);
+  const practice = L.practice || (note && note.practice);
   const ans = state.answers[L.id];
-  const opts = L.quiz.options.map(([text, ok], i) => {
-    const picked = state.picked && state.picked[L.id];
-    const cls = picked === undefined ? '' : ok ? 'correct' : picked === i ? 'wrong' : '';
-    return `<button class="answer ${cls}" data-pick="${i}" type="button" ${ans !== undefined && picked !== undefined && ok === 1 && ans === 1 ? 'disabled' : ''}><span class="l">${'ABCD'[i]}</span><span>${text}</span></button>`;
-  }).join('');
-  const fb = ans === undefined ? '' : ans === 1 ? `<p class="feedback ok">正確。${L.quiz.explain}</p>` : `<p class="feedback">這個選項不對，容易混淆的地方：${L.quiz.explain}</p>`;
+  const picked = state.picked[L.id];
+
+  let bodyHTML;
+  if (L.fromNote) {
+    const pages = L.source && L.source.pages ? ` · p.${L.source.pages[0]}${L.source.pages[1] !== L.source.pages[0] ? '–' + L.source.pages[1] : ''}` : '';
+    const origin = L.source ? `出處：${esc(sourceTitle(L.source.id))}${pages}　·　以自己的話整理，非原文轉載` : '原創筆記';
+    bodyHTML = note
+      ? `<h1>${esc(note.title)}</h1><p class="srcline">${origin}　·　約 ${L.minutes} 分鐘</p>${LC.md(note.body)}`
+      : `<h1>${esc(L.title)}</h1><div class="callout warn"><p>這篇筆記載入失敗。請確認 knowledge_base/web/ 已建置。</p></div>`;
+  } else bodyHTML = L.body();
+
+  const readings = attachedTo(L).filter((n) => LC.notes[n.id]);
+  const readingsHTML = readings.length
+    ? `<section class="readings"><p class="kicker">延伸閱讀 · KNOWLEDGE BASE（${readings.length}）</p>${readings.map((n) => `<details class="reading"><summary>${esc(LC.notes[n.id].title)}<span class="meta">約 ${n.minutes} 分鐘</span></summary>${LC.md(LC.notes[n.id].body)}</details>`).join('')}</section>`
+    : '';
+
+  let quizHTML;
+  if (quiz) {
+    const opts = quiz.options.map(([text, ok], i) => {
+      const cls = picked === undefined ? '' : ok ? 'correct' : picked === i ? 'wrong' : '';
+      return `<button class="answer ${cls}" data-pick="${i}" type="button"><span class="l">${'ABCD'[i]}</span><span>${LC.mdInline(text)}</span></button>`;
+    }).join('');
+    const fb = ans === undefined ? '' : ans === 1 ? `<p class="feedback ok">正確。${LC.mdInline(quiz.explain)}</p>` : `<p class="feedback">這個選項不對，容易混淆的地方：${LC.mdInline(quiz.explain)}</p>`;
+    quizHTML = `<section class="quiz"><p class="kicker">CHECKPOINT</p><h2 style="margin-top:0">${LC.mdInline(quiz.q)}</h2><div class="answers">${opts}</div><div id="feedback">${fb}</div></section>`;
+  } else {
+    quizHTML = `<section class="quiz"><p class="kicker">CHECKPOINT</p><p class="muted">這一章沒有檢查題。讀完後自行標記完成。</p><button class="btn ${ans === 1 ? 'ghost' : ''}" id="mark-read" type="button">${ans === 1 ? '已標記完成 ✓' : '標記為已讀'}</button></section>`;
+  }
+
+  const practiceHTML = practice
+    ? `<section class="practice"><p class="kicker">PRACTICE</p><h2 style="margin-top:0">${LC.mdInline(practice.q)}</h2><p class="muted" style="font-size:13px">先用自己的話寫 3–5 句，再看參考要點。能有結構地講清楚、並說出取捨，才算真的懂。</p><div class="lab"><textarea id="draft" rows="5" placeholder="在這裡寫下你的回答…">${esc(state.drafts[L.id] || '')}</textarea><div style="margin-top:12px"><button class="btn ghost" id="reveal-btn" type="button">看參考要點</button></div><div class="reveal" id="reveal" hidden><strong>參考要點</strong><ul>${practice.ref.map((r) => `<li>${LC.mdInline(r)}</li>`).join('')}</ul></div></div></section>`
+    : '';
+
+  const last = state.index === COURSE.length - 1;
   root.innerHTML = `
-    <p class="kicker">${L.kicker} · WEEK 01</p>
-    ${L.body()}
-    <section class="quiz">
-      <p class="kicker">CHECKPOINT</p>
-      <h2 style="margin-top:0">${L.quiz.q}</h2>
-      <div class="answers" id="answers">${opts}</div>
-      <div id="feedback">${fb}</div>
-    </section>
-    <section class="interview">
-      <p class="kicker">INTERVIEW DRILL</p>
-      <h2 style="margin-top:0">${L.interview.q}</h2>
-      <p class="muted" style="font-size:13px">先用自己的話寫 3–5 句，再看參考要點。Staff 面試看的是你能不能有結構地講清楚，並主動帶出取捨。</p>
-      <div class="lab"><textarea id="draft" rows="5" placeholder="在這裡寫下你的回答…">${esc(state.drafts[L.id] || '')}</textarea>
-      <div style="margin-top:12px"><button class="btn ghost" id="reveal-btn" type="button">看參考要點</button></div>
-      <div class="reveal" id="reveal" hidden><strong>參考要點</strong><ul>${L.interview.ref.map((r) => `<li>${r}</li>`).join('')}</ul></div></div>
-    </section>
+    <p class="kicker">CHAPTER ${state.index + 1} / ${COURSE.length} · WEEK ${String(L.week).padStart(2, '0')}${L.fromNote ? ' · NOTE' : ' · INTERACTIVE'}</p>
+    ${bodyHTML}
+    ${readingsHTML}
+    ${quizHTML}
+    ${practiceHTML}
     <div class="nav-row">
       <button class="btn ghost" id="prev" type="button" ${state.index === 0 ? 'disabled' : ''}>← 上一章</button>
-      <button class="btn" id="next" type="button">${state.index === LESSONS.length - 1 ? '完成第 1 週 ✓' : '下一章 →'}</button>
+      <button class="btn" id="next" type="button">${last ? '查看完成狀況 ✓' : '下一章 →'}</button>
     </div>`;
   root.scrollTop = 0;
   L.init(root);
-  state.picked = state.picked || {};
 
+  const rerender = () => { const top = root.scrollTop; renderLesson().then(() => { root.scrollTop = top; }); };
   $$('[data-pick]', root).forEach((b) => b.addEventListener('click', () => {
     const i = +b.dataset.pick;
     state.picked[L.id] = i;
-    state.answers[L.id] = L.quiz.options[i][1];
-    save(); renderSteps();
-    const scroll = root.scrollTop; renderLesson(); root.scrollTop = scroll;
+    state.answers[L.id] = quiz.options[i][1];
+    save(); renderSteps(); rerender();
   }));
-  $('#draft', root).addEventListener('input', (e) => { state.drafts[L.id] = e.target.value; save(); });
-  $('#reveal-btn', root).addEventListener('click', () => { $('#reveal', root).hidden = false; });
+  const mark = $('#mark-read', root);
+  if (mark) mark.addEventListener('click', () => { state.answers[L.id] = 1; save(); renderSteps(); rerender(); });
+  const draft = $('#draft', root);
+  if (draft) draft.addEventListener('input', (e) => { state.drafts[L.id] = e.target.value; save(); });
+  const reveal = $('#reveal-btn', root);
+  if (reveal) reveal.addEventListener('click', () => { $('#reveal', root).hidden = false; });
   $('#prev', root).addEventListener('click', () => go(state.index - 1));
   $('#next', root).addEventListener('click', () => {
-    if (state.index < LESSONS.length - 1) go(state.index + 1);
-    else {
-      const wrong = LESSONS.filter((l) => state.answers[l.id] !== 1).map((l) => l.title);
-      alert(wrong.length ? `第 1 週完成。以下章節的檢查點還沒答對，建議回頭複習：\n- ${wrong.join('\n- ')}` : '第 1 週全部檢查點通過。下一步：做週作業（快取成本比較 CLI），然後進入第 2 週。');
-    }
+    if (!last) return go(state.index + 1);
+    const todo = COURSE.filter((l) => state.answers[l.id] !== 1).map((l) => l.title);
+    alert(todo.length ? `目前完成 ${COURSE.length - todo.length} / ${COURSE.length} 章。尚未完成：\n- ${todo.slice(0, 10).join('\n- ')}${todo.length > 10 ? `\n…還有 ${todo.length - 10} 章` : ''}` : '全部章節都完成了。下一步：做週作業（快取成本比較 CLI），再看新增的知識庫內容。');
   });
 }
 
-function go(i) { state.index = Math.max(0, Math.min(LESSONS.length - 1, i)); save(); renderSteps(); renderLesson(); }
+function go(i) { state.index = Math.max(0, Math.min(COURSE.length - 1, i)); save(); renderSteps(); renderLesson(); }
 
 $('#steps').addEventListener('click', (e) => { const b = e.target.closest('[data-i]'); if (b) go(+b.dataset.i); });
-$('#reset').addEventListener('click', () => { if (confirm('清除本週的進度與你寫的回答？')) { try { localStorage.removeItem(KEY); } catch { /* ignore */ } state = { index: 0, answers: {}, drafts: {}, picked: {} }; renderSteps(); renderLesson(); } });
+$('#lesson').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-copy]');
+  if (!btn) return;
+  const text = btn.closest('figure').querySelector('code').textContent;
+  const done = () => { btn.textContent = '已複製'; setTimeout(() => { btn.textContent = '複製'; }, 1200); };
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, () => {});
+  else { const t = document.createElement('textarea'); t.value = text; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); done(); } catch { /* ignore */ } t.remove(); }
+});
+$('#reset').addEventListener('click', () => { if (confirm('清除所有章節的進度與你寫的回答？')) { try { localStorage.removeItem(KEY); localStorage.removeItem(LEGACY_KEY); } catch { /* ignore */ } state = blank(); renderSteps(); renderLesson(); } });
 
+/* ---------- roadmap dialog, derived from the same course ---------- */
 const dlg = $('#roadmap');
-$('#roadmap-list').innerHTML = ROADMAP.map(([w, t, open]) => `<li class="${open ? 'open' : ''}"><span>${w}</span><span>${t}</span><em>${open ? 'OPEN' : 'PLANNED'}</em></li>`).join('');
+const weeksOpen = new Set(COURSE.map((l) => l.week));
+$('#roadmap-summary').textContent = `每週節奏：2 天讀概念、3 天做專案、1 天自我檢驗。已開放 ${weeksOpen.size} 週，共 ${COURSE.length} 章（知識庫筆記 ${catalog.notes.length} 篇）。`;
+$('#roadmap-list').innerHTML = Array.from({ length: 12 }, (_, k) => k + 1).map((w) => {
+  const n = COURSE.filter((l) => l.week === w).length;
+  return `<li class="${n ? 'open' : ''}"><span>W${String(w).padStart(2, '0')}</span><span>${esc(weekTitle(w))}</span><em>${n ? `${n} 章` : 'PLANNED'}</em></li>`;
+}).join('');
 $('#open-roadmap').addEventListener('click', () => dlg.showModal());
 $('#close-roadmap').addEventListener('click', () => dlg.close());
 
-state.picked = state.picked || {};
+$('#rail-label').textContent = `課程 · ${COURSE.length} 章 · 由知識庫即時組成`;
+$('#kb-status').textContent = catalog.notes.length ? `KB ${catalog.notes.length} 篇筆記 · ${catalog.sources.length} 個來源` : 'KB 未載入（只顯示互動章節）';
 renderSteps();
 renderLesson();

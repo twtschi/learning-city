@@ -1,0 +1,27 @@
+{
+  "_comment": "Registry of reference sources. The PDFs themselves are NOT in the repo; the build tool finds them via sources.local.json (gitignored), --source id=path, or the sources/ folder. Page numbers in notes are PRINTED page numbers; page_offset converts to PDF pages (pdf_page = printed + page_offset).",
+  "sources": [
+    {
+      "id": "coding-with-ai",
+      "title": "Coding with AI: Examples in Python",
+      "author": "Jeremy C. Morgan",
+      "publisher": "Manning Publications",
+      "year": 2025,
+      "file_glob": "coding-with-ai*.pdf",
+      "page_offset": 22,
+      "printed_pages": [1, 308],
+      "chapters": [
+        {"id": "ch01", "title": "Introducing generative AI", "pages": [3, 26]},
+        {"id": "ch02", "title": "First steps with AI-assisted coding", "pages": [27, 56]},
+        {"id": "ch03", "title": "Design and discovery", "pages": [57, 77]},
+        {"id": "ch04", "title": "Coding the first version of our application", "pages": [78, 100]},
+        {"id": "ch05", "title": "Using Blackbox AI to generate base code", "pages": [101, 148]},
+        {"id": "ch06", "title": "Generating a software backend with Tabnine", "pages": [149, 178]},
+        {"id": "ch07", "title": "Building user interfaces with ChatGPT", "pages": [179, 209]},
+        {"id": "ch08", "title": "Building effective tests with generative AI", "pages": [210, 243]},
+        {"id": "ch09", "title": "Prompt engineering", "pages": [244, 284]},
+        {"id": "ch10", "title": "Vibe coding with Cursor", "pages": [285, 308]}
+      ]
+    }
+  ]
+}

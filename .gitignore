@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# AI Coding knowledge base: raw source text and local paths never leave the machine
+regions/ai-coding/knowledge_base/rag/
+regions/ai-coding/knowledge_base/sources/
+regions/ai-coding/knowledge_base/sources.local.json

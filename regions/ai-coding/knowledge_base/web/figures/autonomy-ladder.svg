@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>AI 自主程度的階梯與對應的護欄</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12.5px}.s{fill:#9db4ac;font-size:10.5px}.h{fill:#08181b;font-size:12px;font-weight:700}
+  </style>
+  <g>
+    <rect x="20"  y="236" width="130" height="64" fill="#4f8f78"/><text class="h" x="32" y="260">1 補全</text><text class="h" x="32" y="278" style="font-weight:400;font-size:10.5px">逐行建議，你按 Tab</text>
+    <rect x="160" y="192" width="130" height="108" fill="#6aa27a"/><text class="h" x="172" y="216">2 聊天</text><text class="h" x="172" y="234" style="font-weight:400;font-size:10.5px">給建議，你手動套用</text>
+    <rect x="300" y="148" width="130" height="152" fill="#b9c46a"/><text class="h" x="312" y="172">3 Agent</text><text class="h" x="312" y="190" style="font-weight:400;font-size:10.5px">改檔、跑指令，每步要確認</text>
+    <rect x="440" y="104" width="130" height="196" fill="#e6a85a"/><text class="h" x="452" y="128">4 自動模式</text><text class="h" x="452" y="146" style="font-weight:400;font-size:10.5px">限定範圍內自動，可還原</text>
+    <rect x="580" y="60" width="120" height="240" fill="#fc8268"/><text class="h" x="592" y="84">5 全自動</text><text class="h" x="592" y="102" style="font-weight:400;font-size:10.5px">高風險，只限拋棄式專案</text>
+  </g>
+  <text class="s" x="20" y="22">自主程度越高，速度越快，但「驗證責任」越不能外包</text>
+  <text class="s" x="20" y="322">護欄隨階梯加重 →  diff review → 測試當規格 → 權限分級與白名單 → 沙箱與可還原（git 分支）→ 成本上限</text>
+  <text class="s" x="20" y="44">風險 ↗</text>
+</svg>

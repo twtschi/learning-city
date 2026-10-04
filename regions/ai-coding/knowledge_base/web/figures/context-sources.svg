@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>Context 的來源與預算</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12.5px}.s{fill:#9db4ac;font-size:10.5px}.m{font-family:'DM Mono',Consolas,monospace;font-size:11px;fill:#e9f0e7}
+    .box{fill:#143034;stroke:#9db4ac;stroke-opacity:.55}.arrow{stroke:#9db4ac;stroke-width:1.2;fill:none}
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9db4ac"/></marker></defs>
+  <text class="s" x="20" y="20">來源</text>
+  <g class="t">
+    <rect class="box" x="20" y="30" width="200" height="34" rx="3"/><text x="32" y="52">目前檔案</text>
+    <rect class="box" x="20" y="72" width="200" height="34" rx="3"/><text x="32" y="94">游標前後（FIM）</text>
+    <rect class="box" x="20" y="114" width="200" height="34" rx="3"/><text x="32" y="136">相鄰分頁／被選的檔案</text>
+    <rect class="box" x="20" y="156" width="200" height="34" rx="3"/><text x="32" y="178">專案結構與設定檔</text>
+    <rect class="box" x="20" y="198" width="200" height="34" rx="3"/><text x="32" y="220">規則檔（團隊慣例）</text>
+    <rect class="box" x="20" y="240" width="200" height="34" rx="3"/><text x="32" y="262">對話歷史與工具輸出</text>
+  </g>
+  <path class="arrow" d="M220 47H300M220 89H300M220 131H300M220 173H300M220 215H300M220 257H300" marker-end="url(#a)"/>
+  <text class="s" x="320" y="20">Context window（一份有限的預算）</text>
+  <rect x="320" y="30" width="380" height="244" rx="4" fill="#0e2226" stroke="#b9f06d"/>
+  <rect x="332" y="44" width="356" height="30" fill="#2b6b6b"/><text class="t" x="342" y="64">規則檔 + 工具定義（每輪都付費，要精簡）</text>
+  <rect x="332" y="82" width="356" height="62" fill="#3f7c86"/><text class="t" x="342" y="104">相關檔案與搜尋結果</text><text class="s" x="342" y="122">只放與任務有關的；雜訊會稀釋注意力</text>
+  <rect x="332" y="152" width="356" height="50" fill="#8d4a3b"/><text class="t" x="342" y="174">對話歷史、工具輸出</text><text class="s" x="342" y="190">要截斷或摘要，長了就壓縮</text>
+  <rect x="332" y="210" width="356" height="52" fill="none" stroke="#9db4ac" stroke-dasharray="5 4"/><text class="s" x="342" y="240">留給模型的輸出空間與餘裕</text>
+  <text class="s" x="20" y="292">放得下 ≠ 用得好：每個來源都要問「這一輪真的需要嗎？」</text>
+</svg>

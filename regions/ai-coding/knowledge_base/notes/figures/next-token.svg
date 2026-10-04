@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>LLM 逐 token 預測下一個片段</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:13px}.s{fill:#9db4ac;font-size:11px}.m{font-family:'DM Mono',Consolas,monospace;font-size:12px;fill:#e9f0e7}
+    .box{fill:#143034;stroke:#9db4ac;stroke-opacity:.5}.arrow{stroke:#9db4ac;stroke-width:1.5;fill:none}
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9db4ac"/></marker></defs>
+  <text class="s" x="20" y="24">① 目前的 context</text>
+  <rect class="box" x="20" y="34" width="190" height="70" rx="4"/>
+  <text class="m" x="32" y="62">for (auto&amp; x : v) {</text>
+  <text class="m" x="32" y="84">  total</text>
+  <path class="arrow" d="M210 69H252" marker-end="url(#a)"/>
+  <text class="s" x="252" y="24">② 模型</text>
+  <rect x="252" y="34" width="100" height="70" rx="4" fill="#1d4b4b" stroke="#b9f06d"/>
+  <text class="t" x="302" y="66" text-anchor="middle">LLM</text>
+  <text class="s" x="302" y="84" text-anchor="middle">算出每個 token</text>
+  <text class="s" x="302" y="97" text-anchor="middle">的分數</text>
+  <path class="arrow" d="M352 69H394" marker-end="url(#a)"/>
+  <text class="s" x="394" y="24">③ 機率分佈（示意）</text>
+  <g class="m">
+    <text x="394" y="50">+=</text><rect x="430" y="40" width="186" height="12" fill="#b9f06d"/><text x="624" y="50">62%</text>
+    <text x="394" y="68">=</text><rect x="430" y="58" width="60" height="12" fill="#8fc4d0"/><text x="498" y="68">20%</text>
+    <text x="394" y="86">++</text><rect x="430" y="76" width="24" height="12" fill="#8fc4d0"/><text x="462" y="86">8%</text>
+    <text x="394" y="104">.</text><rect x="430" y="94" width="18" height="12" fill="#8fc4d0"/><text x="456" y="104">6%</text>
+  </g>
+  <path class="arrow" d="M520 118V160" marker-end="url(#a)"/>
+  <text class="s" x="532" y="144">④ 取樣（temperature / top-p）</text>
+  <rect x="440" y="164" width="160" height="40" rx="4" fill="#143034" stroke="#fc8268"/>
+  <text class="m" x="520" y="189" text-anchor="middle" style="fill:#fc8268">選中：  +=</text>
+  <path class="arrow" d="M440 184H110V112" marker-end="url(#a)" stroke-dasharray="5 4"/>
+  <text class="s" x="120" y="226">⑤ 把選中的 token 接回 context，重複 ②–④，直到結束</text>
+  <text class="s" x="20" y="272">重點：每一步都只是「預測最可能的下一段」，沒有任何一步在查證事實。</text>
+  <text class="s" x="20" y="290">最可能的延續不一定正確，這就是 hallucination 的來源。</text>
+</svg>

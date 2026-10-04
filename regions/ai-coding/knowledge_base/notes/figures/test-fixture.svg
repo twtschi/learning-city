@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>pytest fixture 的生命週期：每個測試都拿到乾淨的記憶體資料庫</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12px}.s{fill:#9db4ac;font-size:10.5px}.m{font-family:'DM Mono',Consolas,monospace;font-size:11px;fill:#b9f06d}
+    .box{fill:#143034;stroke:#9db4ac;stroke-opacity:.6}.ai{fill:#1d4b4b;stroke:#b9f06d}.arrow{stroke:#9db4ac;stroke-width:1.5;fill:none}
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9db4ac"/></marker></defs>
+  <g text-anchor="middle">
+    <rect class="ai" x="20" y="30" width="170" height="60" rx="4"/><text class="t" x="105" y="54">setup</text><text class="s" x="105" y="72">建立 :memory: 資料庫</text><text class="s" x="105" y="84">套用 schema、塞入測試資料</text>
+    <rect class="box" x="260" y="30" width="170" height="60" rx="4"/><text class="m" x="345" y="58">yield conn</text><text class="s" x="345" y="76">把連線交給測試</text>
+    <rect class="ai" x="500" y="30" width="170" height="60" rx="4"/><text class="t" x="585" y="54">teardown</text><text class="s" x="585" y="72">關閉連線，資料庫消失</text>
+  </g>
+  <path class="arrow" d="M190 60H260M430 60H500" marker-end="url(#a)"/>
+  <text class="s" x="20" y="124">對每一個測試函式各跑一次整個流程：</text>
+  <g class="t" text-anchor="middle">
+    <rect class="box" x="20" y="136" width="200" height="40" rx="4"/><text x="120" y="161">test_count_questions</text>
+    <rect class="box" x="260" y="136" width="200" height="40" rx="4"/><text x="360" y="161">test_get_question</text>
+    <rect class="box" x="500" y="136" width="200" height="40" rx="4"/><text x="600" y="161">test_empty_result</text>
+  </g>
+  <text class="s" x="20" y="208">好處：測試之間互不影響、速度快、不會碰到正式資料。</text>
+  <text class="s" x="20" y="226">注意：一個永遠通過的 fixture 測試不代表邏輯正確，斷言要夠具體。</text>
+</svg>

@@ -19,12 +19,18 @@ const REGIONS = [
   },
   {
     id: 'ai-coding', theme: 'ai', index: 'REGION 06', name: 'AI Coding', href: 'regions/ai-coding/index.html',
-    blurb: 'Staff AI Coding Engineer 面試課程。第 1 週：token、取樣、推論瓶頸、快取、tool use。',
+    blurb: 'AI Coding 學習路徑。章節由知識庫即時組成：互動實驗、書籍筆記、思考練習。',
     pos: [690, 285], progress() {
-      const lessons = ['Token 與 Context Window', '取樣：temperature 與 top-p', 'Prefill 與 Decode', 'Prompt Caching 與成本模型', 'Tool Use'];
-      const s = readJSON('learning-city:ai-coding:w1:v1');
-      const done = s?.answers ? Object.values(s.answers).filter((v) => v === 1).length : 0;
-      return { done, total: 5, unit: '章', next: done >= 5 ? '第 1 週完成' : `第 ${done + 1} 章：${lessons[done]}` };
+      /* Same course the region builds: its hand-made lessons first, then every lesson-kind note in the
+         knowledge-base catalog. Adding a note changes the total here with no edit to this file. */
+      const core = [['tokens', 'Token 與 Context Window'], ['sampling', '取樣：temperature 與 top-p'], ['inference', 'Prefill 與 Decode'], ['caching', 'Prompt Caching 與成本模型'], ['toolbox', 'Tool Use']];
+      const notes = (window.LC?.catalog?.notes || []).filter((n) => n.kind === 'lesson').sort((x, y) => x.week - y.week || x.order - y.order);
+      const lessons = [...core, ...notes.map((n) => [`kb:${n.id}`, n.title])];
+      const s = readJSON('learning-city:ai-coding:v2') || readJSON('learning-city:ai-coding:w1:v1');
+      const isDone = (id) => s?.answers?.[id] === 1;
+      const done = lessons.filter(([id]) => isDone(id)).length;
+      const nextLesson = lessons.find(([id]) => !isDone(id));
+      return { done, total: lessons.length, unit: '章', next: nextLesson ? `第 ${done + 1} 章：${nextLesson[1]}` : '目前章節全部完成，等待新的知識庫內容' };
     },
   },
   { id: 'kernel', theme: 'planned', index: 'REGION 01', name: 'Kernel Valley', blurb: '從程序、記憶體與系統呼叫理解作業系統如何維持城市運轉。', pos: [150, 340] },
