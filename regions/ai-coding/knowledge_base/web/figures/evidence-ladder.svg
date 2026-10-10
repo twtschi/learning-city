@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>生產力證據的強度階梯，以及書中數字所在的位置</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12px}.s{fill:#9db4ac;font-size:10.5px}.h{fill:#08181b;font-size:11.5px;font-weight:700}.k{fill:#08181b;font-size:10.5px}
+  </style>
+  <g>
+    <rect x="20"  y="200" width="130" height="70" fill="#4f8f78"/><text class="h" x="30" y="222">1 軼事</text><text class="k" x="30" y="240">推文、個人經驗</text><text class="k" x="30" y="256">書 p.1、p.23</text>
+    <rect x="160" y="170" width="130" height="100" fill="#6aa27a"/><text class="h" x="170" y="192">2 問卷與自述</text><text class="k" x="170" y="210">感受、挫折感</text><text class="k" x="170" y="226">書 p.6、p.10、p.49</text>
+    <rect x="300" y="140" width="130" height="130" fill="#b9c46a"/><text class="h" x="310" y="162">3 單一任務實驗</text><text class="k" x="310" y="180">一個題目、兩組人</text><text class="k" x="310" y="196">書 p.7（HTTP server）</text><text class="k" x="310" y="212">書 p.7（McKinsey）</text>
+    <rect x="440" y="110" width="130" height="160" fill="#e6a85a"/><text class="h" x="450" y="132">4 真實任務隨機對照</text><text class="k" x="450" y="150">任務隨機分配</text><text class="k" x="450" y="166">用自己的程式庫</text><text class="k" x="450" y="182">書中沒有這一層</text>
+    <rect x="580" y="80" width="120" height="190" fill="#fc8268"/><text class="h" x="590" y="102">5 長期交付指標</text><text class="k" x="590" y="120">數月的前後對照</text><text class="k" x="590" y="136">穩定性、返工、</text><text class="k" x="590" y="152">缺陷逃逸</text><text class="k" x="590" y="168">書中沒有這一層</text>
+  </g>
+  <text class="s" x="20" y="22">證據強度 ↗　　越往右，越接近「你的組織會不會變好」</text>
+  <text class="t" x="20" y="298">書的數字大多落在 1–3；導入決策需要你自己補上 4 與 5。</text>
+  <text class="s" x="20" y="316">階梯是粗略的分類，不是嚴格的證據等級；同一層的研究品質也差很多。</text>
+</svg>

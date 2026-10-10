@@ -11,7 +11,7 @@
 | 區域 | 狀態 | 內容 |
 |---|---|---|
 | [PCIe Fabric](regions/pcie/index.html) | 開放 | 以互動模擬與任務理解 PCI Express：Root Complex、Switch、Endpoint、TLP。附 [PCIe 知識庫](regions/pcie/knowledge_base/README.md) |
-| [AI Coding](regions/ai-coding/index.html) | 開放 | AI Coding 學習路徑。互動實驗、書籍筆記、檢查題、思考練習，章節由[知識庫](regions/ai-coding/knowledge_base/README.md)動態組成 |
+| [AI Coding](regions/ai-coding/index.html) | 開放 | AI Coding 學習路徑，含 staff engineer 層級的教材。互動實驗、書籍筆記、可重跑的實驗、檢查題、思考練習，章節由[知識庫](regions/ai-coding/knowledge_base/README.md)動態組成 |
 | Kernel Valley / Data Commons / Network Harbour / Systems Square | 規劃中 | 在地圖上以空地呈現 |
 
 ## 在本機執行
@@ -105,7 +105,7 @@ python regions/ai-coding/knowledge_base/tools/build_knowledge_base.py --only web
 ## 已知限制
 
 - 進度只存在單一瀏覽器的 `localStorage`，不跨裝置、不同步。
-- AI Coding 的書籍來源是 Python 加各種 AI 工具的入門實作書，只涵蓋 Week 1–2 的主題；eval、agent 架構、MCP、安全、推論效能等後續週次還需要其他內容。
+- AI Coding 目前有兩個書籍來源：Morgan 的 Python 加各種 AI 工具的入門實作書，以及 Taulli《AI-Assisted Programming》第 1、8、9 章的節錄（含 staff 層級的補充與可重跑的實驗）。它們涵蓋 Week 1–2 的工作流，並部分涵蓋 Week 6（風險登記表）與 Week 8（判讀生產力證據）；LLM 系統的 eval 設計、agent 架構、MCP、提示注入的深入內容、推論效能等後續週次仍需要其他來源。
 - PCIe 區域單獨使用只能建立入門的心智模型，尚不足以培養實務除錯能力，詳見 [LEARNING_PLAN.md](LEARNING_PLAN.md)。
 
 ## 授權
