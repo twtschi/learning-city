@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>生成—驗證迴圈：AI 產生候選解，由 oracle 判定是否接受</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12px}.s{fill:#9db4ac;font-size:10.5px}
+    .box{fill:#143034;stroke:#9db4ac;stroke-opacity:.6}.ai{fill:#1d4b4b;stroke:#b9f06d}.gate{fill:#3a1f1a;stroke:#fc8268}.arrow{stroke:#9db4ac;stroke-width:1.5;fill:none}
+  </style>
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#9db4ac"/></marker></defs>
+  <g class="t" text-anchor="middle">
+    <rect class="gate" x="10" y="40" width="150" height="56" rx="4"/><text x="85" y="64">可執行的規格</text><text class="s" x="85" y="82">測試／型別／契約／範例</text>
+    <rect class="ai" x="200" y="40" width="130" height="56" rx="4"/><text x="265" y="64">AI 產生候選</text><text class="s" x="265" y="82">程式、測試、重構</text>
+    <rect class="box" x="370" y="40" width="150" height="56" rx="4"/><text x="445" y="64">Oracle 判定</text><text class="s" x="445" y="82">能不能便宜地知道對錯</text>
+    <rect class="gate" x="560" y="40" width="130" height="56" rx="4"/><text x="625" y="64">人簽核後合併</text><text class="s" x="625" y="82">依爆炸半徑決定深度</text>
+  </g>
+  <path class="arrow" d="M160 68H200M330 68H370M520 68H560" marker-end="url(#a)"/>
+  <path class="arrow" d="M445 96V120H265V100" stroke-dasharray="4 3" marker-end="url(#a)"/>
+  <text class="s" x="270" y="136">不通過：把失敗訊息交回去（或自己改），再跑一輪</text>
+  <text class="t" x="10" y="176">常用的 oracle（越上面越便宜、越自動）</text>
+  <g class="t">
+    <rect class="box" x="10"  y="190" width="130" height="34"/><text x="20" y="212">編譯／型別檢查</text>
+    <rect class="box" x="148" y="190" width="130" height="34"/><text x="158" y="212">單元／回歸測試</text>
+    <rect class="box" x="286" y="190" width="130" height="34"/><text x="296" y="212">新舊對照（差分）</text>
+    <rect class="box" x="424" y="190" width="130" height="34"/><text x="434" y="212">lint／靜態分析</text>
+    <rect class="gate" x="562" y="190" width="128" height="34"/><text x="572" y="212">人工審查</text>
+  </g>
+  <text class="s" x="10" y="252">沒有便宜的 oracle，就不要提高自主程度：先補測試、補型別、縮小任務，或改成人主導。</text>
+  <text class="s" x="10" y="270">同一個模型寫的程式與測試，錯誤會相關：測試的強度也要被檢查（突變測試、手動破壞）。</text>
+</svg>
