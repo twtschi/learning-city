@@ -19,7 +19,7 @@ const REGIONS = [
   },
   {
     id: 'ai-coding', theme: 'ai', index: 'REGION 06', name: 'AI Coding', href: 'regions/ai-coding/index.html',
-    blurb: 'AI Coding 學習路徑。章節由知識庫即時組成：互動實驗、書籍筆記、思考練習。',
+    blurb: 'AI Coding 學習路徑。章節由知識庫即時組成：互動實驗、筆記、可重跑的實作、思考練習。',
     pos: [690, 285], progress() {
       /* Same course the region builds: its hand-made lessons first, then every lesson-kind note in the
          knowledge-base catalog. Adding a note changes the total here with no edit to this file. */

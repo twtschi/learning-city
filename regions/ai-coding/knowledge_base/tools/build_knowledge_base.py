@@ -25,7 +25,7 @@ A note is a Markdown file in notes/ with a small front matter block:
     order: 70
     attach: tokens               # deepdive only: a core lesson id or another note id
     minutes: 15
-    source: coding-with-ai p.244-265   # optional citation, printed page numbers
+    source: coding-with-ai p.244-265   # optional maintainer metadata (validated; never shipped to the site)
     ---
 
 Inside a note you can use fenced code blocks (```lang) and images. Images must live in
@@ -199,7 +199,7 @@ def js_literal(obj: object) -> str:
     return text.replace("</", "<\\/").replace("\u2028", "\\u2028").replace("\u2029", "\\u2029")
 
 
-def write_web(notes: list[dict], sources: list[dict], course: dict) -> None:
+def write_web(notes: list[dict], course: dict) -> None:
     out_notes = WEB_DIR / "notes"
     if out_notes.exists():
         shutil.rmtree(out_notes)
@@ -212,15 +212,15 @@ def write_web(notes: list[dict], sources: list[dict], course: dict) -> None:
         shutil.copytree(FIGURES_DIR, out_figs)
     index = []
     for n in notes:
-        payload = {k: v for k, v in n.items() if not k.startswith("_")}
+        # `source` is maintainer metadata (validated above, kept in notes/*.md); the site never shows it.
+        payload = {k: v for k, v in n.items() if not k.startswith("_") and k != "source"}
         (out_notes / f"{n['id']}.js").write_text(f"{header}LC.defineNote({js_literal(payload)});\n", encoding="utf-8")
-        index.append({k: n[k] for k in ("id", "title", "kind", "week", "order", "minutes", "attach", "source")} | {"file": f"notes/{n['id']}.js"})
+        index.append({k: n[k] for k in ("id", "title", "kind", "week", "order", "minutes", "attach")} | {"file": f"notes/{n['id']}.js"})
     catalog = {
         "schema": 1,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "weeks": course["weeks"],
         "core_lessons": course["core_lessons"],
-        "sources": [{k: s.get(k) for k in ("id", "title", "author", "publisher", "year")} for s in sources],
         "notes": index,
     }
     (WEB_DIR / "catalog.js").write_text(f"{header}LC.registerCatalog({js_literal(catalog)});\n", encoding="utf-8")
@@ -357,7 +357,7 @@ def main() -> int:
         if args.only != "rag":
             notes = load_notes({s["id"]: s for s in registry}, course["core_lessons"])
             notes.sort(key=lambda n: (n["week"], n["order"], n["id"]))
-            write_web(notes, registry, course)
+            write_web(notes, course)
         if args.only != "web":
             build_rag(registry, overrides)
     except BuildError as exc:

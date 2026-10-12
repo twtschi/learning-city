@@ -19,7 +19,7 @@
   <rect x="20" y="124" width="680" height="1" fill="#9db4ac" fill-opacity=".25"/>
   <text class="t" x="20" y="152">你看到的「建議」＝ context 蒐集 + 前處理 + 模型 + 後處理</text>
   <text class="s" x="20" y="176">• 比較兩個工具時，差別常常不在模型，而在送進去的 context 與前後處理。</text>
-  <text class="s" x="20" y="194">• 公開程式碼比對是「可選」的管理設定（依書中描述），不是每個方案都有。</text>
-  <text class="s" x="20" y="212">• 這張圖依書中對 Copilot 的描述簡化而成；各家實作細節不同，且會隨版本改變。</text>
+  <text class="s" x="20" y="194">• 公開程式碼比對是「可選」的管理設定，不是每個方案都有。</text>
+  <text class="s" x="20" y="212">• 這張圖依公開描述簡化而成；各家實作細節不同，且會隨版本改變。</text>
   <text class="s" x="20" y="244">延伸思考：換一個工具時，你比較的是模型，還是 context 管線？</text>
 </svg>
