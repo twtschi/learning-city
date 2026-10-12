@@ -22,6 +22,21 @@
         {"id": "ch09", "title": "Prompt engineering", "pages": [244, 284]},
         {"id": "ch10", "title": "Vibe coding with Cursor", "pages": [285, 308]}
       ]
+    },
+    {
+      "id": "ai-assisted-programming",
+      "title": "AI-Assisted Programming: Better Planning, Coding, Testing, and Deployment（第 1、8、9 章節錄）",
+      "author": "Tom Taulli",
+      "publisher": "O'Reilly Media",
+      "year": 2024,
+      "file_glob": "*ai-assisted-programming*.pdf",
+      "page_offset": 6,
+      "printed_pages": [1, 59],
+      "chapters": [
+        {"id": "tp-ch01", "title": "New World for Developers", "pages": [1, 20]},
+        {"id": "tp-ch08", "title": "Coding", "pages": [21, 45]},
+        {"id": "tp-ch09", "title": "Debugging, Testing, and Deployment", "pages": [47, 59]}
+      ]
     }
   ]
 }

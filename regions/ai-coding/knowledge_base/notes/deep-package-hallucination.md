@@ -1,0 +1,86 @@
+---
+id: deep-package-hallucination
+title: 套件幻覺：模型編出來的依賴名稱，與一個 CI 檢查
+kind: deepdive
+attach: taulli-risk-register
+week: 6
+order: 10
+minutes: 8
+source: ai-assisted-programming p.15-17
+---
+幻覺在大多數情況下只是「程式跑不起來」，是無害的失敗。但有一種幻覺會變成**供應鏈攻擊的入口**：模型建議了一個**不存在的套件名稱**。
+
+標示方式：**【書】** 書中的說法（附頁碼）；**【實測】** 我在沙箱實際執行的結果；**【外部】** 外部研究，透過搜尋核對過摘要，無法在此環境開啟原文；**【判斷】** 我的判斷。
+
+## 機制
+
+1. 你要求 AI 實作某功能，它建議 `import fastjsonx`，並附上 `pip install fastjsonx`。
+2. 這個套件**不存在**。若你直接執行，安裝失敗，沒有傷害。
+3. 但如果有人**預先在公開套件庫註冊了這個名稱**，並放入惡意程式碼，安裝就會成功，惡意程式碼在安裝或匯入時執行。
+
+這個問題與書中描述的幻覺是同一類（輸出看似正確但不是事實，p.15），差別在於**錯誤的名稱可以被攻擊者利用**。
+
+## 外部研究【外部】
+
+Spracklen 等人的論文〈We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs〉（arXiv 2024 年 6 月，發表於 USENIX Security 2025）。依搜尋結果對摘要的描述：
+
+- 評估了 16 個程式碼生成模型，在兩種程式語言上產生共 576,000 個程式碼樣本。
+- 幻覺套件的平均比例，商用模型至少 5.2%，開源模型為 21.7%。
+- 共記錄到 205,474 個不同的幻覺套件名稱。
+- 作者提出幾種緩解策略，並說可以明顯降低幻覺率，同時維持程式碼品質。
+
+我沒能開啟論文原文，所以不引用更細的數字；採用這類數字之前，請查原文，並注意它測的是特定模型與特定時間點。
+
+## 控制：深度防禦【判斷】
+
+沒有單一措施足夠，要疊加：
+
+1. **依賴宣告與鎖定檔**：所有依賴必須寫在版本庫裡的宣告檔與鎖定檔，CI 檢查匯入是否都有宣告（見下方實驗）。
+2. **雜湊鎖定**：鎖定檔要包含套件的雜湊（例如 pip 的 `--require-hashes`、npm 的 lockfile 完整性欄位），避免同名替換。
+3. **私有鏡像與允許清單**：公司內部的套件代理只放行審查過的套件，新套件要走申請流程。
+4. **新依賴的審查**：名稱是否與官方文件完全一致、首次發佈時間、維護者、下載量、原始碼庫的真實性。名稱剛出現幾天、沒有原始碼庫的套件，一律視為可疑。
+5. **不照貼 AI 給的安裝指令**：套件名稱要從官方文件取得。
+6. **限制安裝時的程式碼執行**：在 CI 等環境盡可能關閉安裝腳本（例如 npm 的 `--ignore-scripts`，並確認專案仍可建置）。
+7. **軟體組成分析（SCA）**：定期掃描已知漏洞與可疑套件。
+
+## 實驗：比對匯入與宣告的依賴
+
+下面是最小的 CI 檢查：用 AST 取出程式碼的頂層匯入，排除標準庫與你宣告過的依賴，剩下的就是「來路不明」。
+
+```python
+import ast, sys
+
+def top_level_imports(source: str) -> set[str]:
+    names = set()
+    for node in ast.walk(ast.parse(source)):
+        if isinstance(node, ast.Import):
+            names |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            names.add(node.module.split(".")[0])
+    return names
+
+def undeclared(source: str, declared: set[str]) -> list[str]:
+    return sorted(n for n in top_level_imports(source)
+                  if n not in sys.stdlib_module_names and n not in declared)
+
+generated = """
+import json, requests
+import numpy as np
+from fastjsonx import loads          # 模型編出來的套件
+from . import local_helper           # 相對匯入：略過
+"""
+print(undeclared(generated, declared={"requests", "numpy"}))
+```
+
+**【實測】** 輸出：
+
+```text
+['fastjsonx']
+```
+
+**限制，審查這類檢查時要能說出來：**
+
+- **匯入名稱不等於發行套件的名稱**：`import yaml` 對應 PyYAML，`import PIL` 對應 Pillow，`import sklearn` 對應 scikit-learn。`declared` 應該從**鎖定檔的套件資訊**推導出頂層匯入名稱（例如 Python 3.10 之後的 `importlib.metadata.packages_distributions()` 可以在已安裝的環境中提供對照），而不是手寫。
+- 它只能看到靜態的匯入。`importlib.import_module(name)` 這類動態匯入看不到。
+- 「在鎖定檔裡」只代表有人審查過並接受它，**不代表它是安全的**。審查流程才是真正的控制。
+- 這個檢查攔的是「未宣告」，攔不到「已宣告、但名稱是被搶註的」。那要靠雜湊鎖定、私有鏡像與審查。

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 350" font-family="'Noto Sans TC','Segoe UI',sans-serif">
+  <title>抽象的階梯：表達力往上，形式化的翻譯保證在 LLM 這一層消失</title>
+  <style>
+    .t{fill:#e9f0e7;font-size:12.5px}.s{fill:#9db4ac;font-size:10.5px}.h{fill:#08181b;font-size:11.5px;font-weight:700}
+    .bar{fill:#143034;stroke:#9db4ac;stroke-opacity:.7}.llm{fill:#3a1f1a;stroke:#fc8268}
+  </style>
+  <text class="s" x="20" y="22">表達力：同樣的意圖，你需要寫的東西越來越少 ↗</text>
+  <g>
+    <rect class="bar" x="20"  y="190" width="160" height="70"/>
+    <text class="t" x="32" y="214">組譯器</text><text class="s" x="32" y="234">助記符 → 機器碼</text><text class="s" x="32" y="250">一對一翻譯</text>
+    <rect class="bar" x="190" y="150" width="160" height="110"/>
+    <text class="t" x="202" y="174">編譯器＋高階語言</text><text class="s" x="202" y="194">程式碼 → 機器碼</text><text class="s" x="202" y="210">有語言規格可對照</text><text class="s" x="202" y="226">同輸入 → 同輸出</text>
+    <rect class="bar" x="360" y="105" width="160" height="155"/>
+    <text class="t" x="372" y="129">函式庫／框架</text><text class="s" x="372" y="149">API 呼叫 → 行為</text><text class="s" x="372" y="165">有 API 契約與文件</text><text class="s" x="372" y="181">可讀原始碼</text>
+    <rect class="bar llm" x="530" y="50" width="170" height="210"/>
+    <text class="t" x="542" y="74">LLM 輔助</text><text class="s" x="542" y="94">自然語言 → 候選程式</text><text class="s" x="542" y="110">機率分佈中的一個樣本</text><text class="s" x="542" y="126">沒有形式化規格</text><text class="s" x="542" y="142">通常不可逐位元重現</text>
+  </g>
+  <g>
+    <rect x="20"  y="268" width="160" height="26" fill="#4f8f78"/><text class="h" x="32"  y="285">翻譯保證：形式化</text>
+    <rect x="190" y="268" width="160" height="26" fill="#6aa27a"/><text class="h" x="202" y="285">翻譯保證：語言規格</text>
+    <rect x="360" y="268" width="160" height="26" fill="#b9c46a"/><text class="h" x="372" y="285">翻譯保證：API 契約</text>
+    <rect x="530" y="268" width="170" height="26" fill="#fc8268"/><text class="h" x="542" y="285">翻譯保證：你來外加</text>
+  </g>
+  <text class="s" x="20" y="316">驗證責任從「工具」移到「你」：測試、型別、靜態分析、審查，要自己補上翻譯保證。</text>
+  <text class="s" x="20" y="334">每一層都換來表達力，LLM 這一層換得最多，放棄的保證也最多。</text>
+</svg>
