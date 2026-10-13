@@ -16,7 +16,7 @@ in the real output. Timings such as "0.15s" or "215.1 ms" are masked before comp
 
 Usage:
     python knowledge_base/tools/verify_lab_outputs.py                 # every note that has a 【實測】 block
-    python knowledge_base/tools/verify_lab_outputs.py taulli-safe-refactoring taulli-data-ui-api
+    python knowledge_base/tools/verify_lab_outputs.py safe-refactoring data-ui-api
 
 Needs: Python 3.11+ (tomllib), PyYAML (pip install pyyaml), Node.js (the refactoring lab calls `node`).
 It EXECUTES the notes' code, so only run it on notes you trust. Exit code is non-zero on any failure.

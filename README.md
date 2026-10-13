@@ -11,7 +11,7 @@
 | 區域 | 狀態 | 內容 |
 |---|---|---|
 | [PCIe Fabric](regions/pcie/index.html) | 開放 | 以互動模擬與任務理解 PCI Express：Root Complex、Switch、Endpoint、TLP。附 [PCIe 知識庫](regions/pcie/knowledge_base/README.md) |
-| [AI Coding](regions/ai-coding/index.html) | 開放 | AI Coding 學習路徑，含 staff engineer 層級的教材。互動實驗、書籍筆記、可重跑的實驗、檢查題、思考練習，章節由[知識庫](regions/ai-coding/knowledge_base/README.md)動態組成 |
+| [AI Coding](regions/ai-coding/index.html) | 開放 | AI Coding 學習路徑，含 staff engineer 層級的教材。互動實驗、筆記、可重跑的實驗、檢查題、思考練習，章節由[知識庫](regions/ai-coding/knowledge_base/README.md)動態組成 |
 | Kernel Valley / Data Commons / Network Harbour / Systems Square | 規劃中 | 在地圖上以空地呈現 |
 
 ## 在本機執行
@@ -84,7 +84,7 @@ python regions/ai-coding/knowledge_base/tools/build_knowledge_base.py --only web
 重點規則：
 
 - `web/` 是**會 commit 的建置產物**。改了筆記卻忘記重建，網站就會是舊內容。
-- 書籍原文只存在本機的 `rag/`（已加入 `.gitignore`），不進版本庫、不上網站。網站上是自己整理的筆記，附頁碼出處。
+- 書籍原文只存在本機的 `rag/`（已加入 `.gitignore`），不進版本庫、不上網站。網站上只顯示自己整理的筆記，不顯示書名、頁碼與出處；來源只記在筆記的前置資料與 `sources.json`，供維護與版權追蹤。
 
 ## 新增一個區域
 
@@ -100,12 +100,12 @@ python regions/ai-coding/knowledge_base/tools/build_knowledge_base.py --only web
 
 - 各區域知識庫的來源與授權由各自的 README 說明。
 - AI Coding：書籍原文、PDF 與本機路徑（`rag/`、`sources/`、`sources.local.json`）都被忽略，不要加進版本控制，也不要把書中的長段原文貼進筆記。
-- 筆記中的圖由本專案自行繪製；引用書中的數據或說法時，會標明是作者的個人經驗或需要校正。
+- 筆記中的圖由本專案自行繪製；外部數據只引用可查證的事實並標示【外部】，個人經驗類的說法會標明不是實驗結果。
 
 ## 已知限制
 
 - 進度只存在單一瀏覽器的 `localStorage`，不跨裝置、不同步。
-- AI Coding 目前有兩個書籍來源：Morgan 的 Python 加各種 AI 工具的入門實作書，以及 Taulli《AI-Assisted Programming》第 1、8、9 章的節錄（含 staff 層級的補充與可重跑的實驗）。它們涵蓋 Week 1–2 的工作流，並部分涵蓋 Week 6（風險登記表）與 Week 8（判讀生產力證據）；LLM 系統的 eval 設計、agent 架構、MCP、提示注入的深入內容、推論效能等後續週次仍需要其他來源。
+- AI Coding 目前的內容涵蓋 Week 1–2 的工作流（含 staff 層級的補充與可重跑的實驗），並部分涵蓋 Week 6（風險登記表）與 Week 8（判讀生產力證據）；LLM 系統的 eval 設計、agent 架構、MCP、提示注入的深入內容、推論效能等後續週次仍需要其他來源。
 - PCIe 區域單獨使用只能建立入門的心智模型，尚不足以培養實務除錯能力，詳見 [LEARNING_PLAN.md](LEARNING_PLAN.md)。
 
 ## 授權

@@ -2,7 +2,7 @@
 id: deep-package-hallucination
 title: 套件幻覺：模型編出來的依賴名稱，與一個 CI 檢查
 kind: deepdive
-attach: taulli-risk-register
+attach: risk-register
 week: 6
 order: 10
 minutes: 8
@@ -10,7 +10,7 @@ source: ai-assisted-programming p.15-17
 ---
 幻覺在大多數情況下只是「程式跑不起來」，是無害的失敗。但有一種幻覺會變成**供應鏈攻擊的入口**：模型建議了一個**不存在的套件名稱**。
 
-標示方式：**【書】** 書中的說法（附頁碼）；**【實測】** 我在沙箱實際執行的結果；**【外部】** 外部研究，透過搜尋核對過摘要，無法在此環境開啟原文；**【判斷】** 我的判斷。
+標示方式：**【實測】** 是在沙箱實際執行的結果；**【外部】** 是可查證的外部研究，依公開摘要整理，引用前請讀原文；**【判斷】** 是工程判斷。
 
 ## 機制
 
@@ -18,18 +18,18 @@ source: ai-assisted-programming p.15-17
 2. 這個套件**不存在**。若你直接執行，安裝失敗，沒有傷害。
 3. 但如果有人**預先在公開套件庫註冊了這個名稱**，並放入惡意程式碼，安裝就會成功，惡意程式碼在安裝或匯入時執行。
 
-這個問題與書中描述的幻覺是同一類（輸出看似正確但不是事實，p.15），差別在於**錯誤的名稱可以被攻擊者利用**。
+這個問題本質上就是幻覺（輸出看似正確但不是事實），差別在於**錯誤的名稱可以被攻擊者利用**。
 
 ## 外部研究【外部】
 
-Spracklen 等人的論文〈We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs〉（arXiv 2024 年 6 月，發表於 USENIX Security 2025）。依搜尋結果對摘要的描述：
+Spracklen 等人的論文〈We Have a Package for You! A Comprehensive Analysis of Package Hallucinations by Code Generating LLMs〉（arXiv 2024 年 6 月，發表於 USENIX Security 2025）。依論文摘要：
 
 - 評估了 16 個程式碼生成模型，在兩種程式語言上產生共 576,000 個程式碼樣本。
 - 幻覺套件的平均比例，商用模型至少 5.2%，開源模型為 21.7%。
 - 共記錄到 205,474 個不同的幻覺套件名稱。
-- 作者提出幾種緩解策略，並說可以明顯降低幻覺率，同時維持程式碼品質。
+- 論文作者提出幾種緩解策略，並說可以明顯降低幻覺率，同時維持程式碼品質。
 
-我沒能開啟論文原文，所以不引用更細的數字；採用這類數字之前，請查原文，並注意它測的是特定模型與特定時間點。
+這裡只引用摘要層級的數字；採用之前請查原文，並注意它測的是特定模型與特定時間點。
 
 ## 控制：深度防禦【判斷】
 

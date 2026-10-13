@@ -400,10 +400,9 @@ LESSONS.push({
  * catalog, and the rail, the progress totals and the home-page city all follow. */
 LESSONS.forEach((l) => { l.week = 1; l.order = 0; });
 
-const catalog = LC.catalog || { notes: [], weeks: {}, sources: [] };
-const sourceTitle = (id) => (catalog.sources.find((x) => x.id === id) || {}).title || id;
+const catalog = LC.catalog || { notes: [], weeks: {} };
 
-const noteLesson = (meta) => ({ id: `kb:${meta.id}`, noteId: meta.id, title: meta.title, week: meta.week, order: meta.order, minutes: meta.minutes, source: meta.source, fromNote: true, init() {} });
+const noteLesson = (meta) => ({ id: `kb:${meta.id}`, noteId: meta.id, title: meta.title, week: meta.week, order: meta.order, minutes: meta.minutes, fromNote: true, init() {} });
 const COURSE = [...LESSONS, ...catalog.notes.filter((n) => n.kind === 'lesson').map(noteLesson)]
   .sort((a, b) => a.week - b.week || Number(!!a.fromNote) - Number(!!b.fromNote) || a.order - b.order);
 
@@ -454,10 +453,8 @@ async function renderLesson() {
 
   let bodyHTML;
   if (L.fromNote) {
-    const pages = L.source && L.source.pages ? ` · p.${L.source.pages[0]}${L.source.pages[1] !== L.source.pages[0] ? '–' + L.source.pages[1] : ''}` : '';
-    const origin = L.source ? `出處：${esc(sourceTitle(L.source.id))}${pages}　·　以自己的話整理，非原文轉載` : '原創筆記';
     bodyHTML = note
-      ? `<h1>${esc(note.title)}</h1><p class="srcline">${origin}　·　約 ${L.minutes} 分鐘</p>${LC.md(note.body)}`
+      ? `<h1>${esc(note.title)}</h1><p class="srcline">約 ${L.minutes} 分鐘</p>${LC.md(note.body)}`
       : `<h1>${esc(L.title)}</h1><div class="callout warn"><p>這篇筆記載入失敗。請確認 knowledge_base/web/ 已建置。</p></div>`;
   } else bodyHTML = L.body();
 
@@ -542,6 +539,6 @@ $('#open-roadmap').addEventListener('click', () => dlg.showModal());
 $('#close-roadmap').addEventListener('click', () => dlg.close());
 
 $('#rail-label').textContent = `課程 · ${COURSE.length} 章 · 由知識庫即時組成`;
-$('#kb-status').textContent = catalog.notes.length ? `KB ${catalog.notes.length} 篇筆記 · ${catalog.sources.length} 個來源` : 'KB 未載入（只顯示互動章節）';
+$('#kb-status').textContent = catalog.notes.length ? `KB ${catalog.notes.length} 篇筆記` : 'KB 未載入（只顯示互動章節）';
 renderSteps();
 renderLesson();
