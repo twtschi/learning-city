@@ -146,6 +146,10 @@ figure { margin:0; }
 figure.fig { margin:22px 0; border:1px solid var(--line); background:rgba(0,0,0,.22); }
 figure.fig img { display:block; width:100%; height:auto; }
 figure.fig figcaption { padding:8px 12px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.6; }
+figure.lesson-video { margin:18px 0 26px; border:1px solid var(--line); background:#000; }
+figure.lesson-video video { display:block; width:100%; aspect-ratio:16 / 9; background:#000; }
+figure.lesson-video video::cue { font-family:var(--sans); font-size:18px; line-height:1.5; color:#fff; background:rgba(0,0,0,.72); }
+figure.lesson-video figcaption { padding:8px 12px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; line-height:1.6; background:var(--deep); }
 
 figure.code { margin:18px 0; border:1px solid var(--line); background:#06141a; }
 figure.code figcaption { display:flex; justify-content:space-between; align-items:center; padding:5px 10px; border-bottom:1px solid var(--line); color:var(--muted); font:9px var(--mono); letter-spacing:.12em; text-transform:uppercase; }

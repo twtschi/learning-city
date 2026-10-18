@@ -11,7 +11,7 @@
 | 區域 | 狀態 | 內容 |
 |---|---|---|
 | [PCIe Fabric](regions/pcie/index.html) | 開放 | 以互動模擬與任務理解 PCI Express：Root Complex、Switch、Endpoint、TLP。附 [PCIe 知識庫](regions/pcie/knowledge_base/README.md) |
-| [AI Coding](regions/ai-coding/index.html) | 開放 | AI Coding 學習路徑，含 staff engineer 層級的教材。互動實驗、筆記、可重跑的實驗、檢查題、思考練習，章節由[知識庫](regions/ai-coding/knowledge_base/README.md)動態組成 |
+| [AI Coding](regions/ai-coding/index.html) | 開放 | AI Coding 學習路徑，含 staff engineer 層級的教材。互動實驗、筆記、可重跑的實驗、檢查題、思考練習，每章附三分鐘以上的[導讀影片](regions/ai-coding/videos/README.md)，章節由[知識庫](regions/ai-coding/knowledge_base/README.md)動態組成 |
 | Kernel Valley / Data Commons / Network Harbour / Systems Square | 規劃中 | 在地圖上以空地呈現 |
 
 ## 在本機執行
@@ -58,6 +58,7 @@ regions/
     index.html, app.js, ...       區域介面（互動章節＋知識庫章節）
     markdown.js                   筆記用的簡易、安全的 Markdown 渲染器
     knowledge_base/               AI Coding 知識庫（見下）
+    videos/                       每章的導讀影片：腳本、建置工具、MP4／字幕（見 videos/README.md）
 LEARNING_PLAN.md                  PCIe 區域的學習與改善計畫
 .github/workflows/                GitHub Pages 部署
 ```
@@ -81,9 +82,11 @@ python regions/ai-coding/knowledge_base/tools/build_knowledge_base.py --only web
 
 筆記格式、如何加入新的來源書、如何查詢原文，請看[知識庫 README](regions/ai-coding/knowledge_base/README.md)。
 
+每章的導讀影片由 `videos/scripts/<id>.txt` 建置成 MP4 與 WebVTT 字幕（離線語音合成，不需要雲端服務），`videos/manifest.js` 決定哪些章節顯示播放器。重建方式見[影片 README](regions/ai-coding/videos/README.md)。
+
 重點規則：
 
-- `web/` 是**會 commit 的建置產物**。改了筆記卻忘記重建，網站就會是舊內容。
+- `web/` 是**會 commit 的建置產物**。改了筆記卻忘記重建，網站就會是舊內容。影片（`videos/*.mp4`、`*.vtt`、`manifest.js`）也一樣；改了筆記的重點，對應的影片腳本也要一起更新並重建。
 - 書籍原文只存在本機的 `rag/`（已加入 `.gitignore`），不進版本庫、不上網站。網站上只顯示自己整理的筆記，不顯示書名、頁碼與出處；來源只記在筆記的前置資料與 `sources.json`，供維護與版權追蹤。
 
 ## 新增一個區域
@@ -105,6 +108,7 @@ python regions/ai-coding/knowledge_base/tools/build_knowledge_base.py --only web
 ## 已知限制
 
 - 進度只存在單一瀏覽器的 `localStorage`，不跨裝置、不同步。
+- AI Coding 的影片是 H.264／AAC 的 MP4。Chrome、Edge、Safari、Firefox 都能播放；不含專有編解碼器的開源 Chromium 版本（例如 Playwright 內建的 Chromium）無法播放。旁白是語音合成，口音為中國大陸普通話，部分英文術語在旁白中改讀中文，字幕保留原文。
 - AI Coding 目前的內容涵蓋 Week 1–2 的工作流（含 staff 層級的補充與可重跑的實驗），並部分涵蓋 Week 6（風險登記表）與 Week 8（判讀生產力證據）；LLM 系統的 eval 設計、agent 架構、MCP、提示注入的深入內容、推論效能等後續週次仍需要其他來源。
 - PCIe 區域單獨使用只能建立入門的心智模型，尚不足以培養實務除錯能力，詳見 [LEARNING_PLAN.md](LEARNING_PLAN.md)。
 
