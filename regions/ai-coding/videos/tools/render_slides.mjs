@@ -30,7 +30,7 @@ function body(s, i, n) {
     case 'table':
       return `<h2>${inline(s.heading)}</h2><table><thead><tr>${s.rows[0].map((c) => `<th>${inline(c)}</th>`).join('')}</tr></thead><tbody>${s.rows.slice(1).map((r) => `<tr>${r.map((c) => `<td>${inline(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>${s.note ? `<p class="note">${inline(s.note)}</p>` : ''}`;
     case 'figure':
-      return `<h2>${inline(s.heading)}</h2><figure><img src="file://${path.resolve(spec.figuresDir, s.src)}"/>${s.caption ? `<figcaption>${inline(s.caption)}</figcaption>` : ''}</figure>`;
+      return `<h2>${inline(s.heading)}</h2><figure>${figure(path.resolve(spec.figuresDir, s.src))}${s.caption ? `<figcaption>${inline(s.caption)}</figcaption>` : ''}</figure>`;
     case 'code':
       return `<h2>${inline(s.heading)}</h2><pre class="code"><span class="lang">${esc(s.lang || 'text')}</span>${esc(s.code)}</pre>${s.note ? `<p class="note">${inline(s.note)}</p>` : ''}`;
     case 'quiz':
@@ -40,6 +40,13 @@ function body(s, i, n) {
     default:
       throw new Error(`unknown slide type ${s.type}`);
   }
+}
+
+// SVGs go inline in a shadow root: the slide fonts apply to their text, and their <style> rules stay scoped
+function figure(file) {
+  if (!file.endsWith('.svg')) return `<img src="data:image/${path.extname(file).slice(1)};base64,${fs.readFileSync(file).toString('base64')}"/>`;
+  const svg = fs.readFileSync(file, 'utf8').replace(/<\?xml[^>]*>/, '');
+  return `<div class="fig"><template shadowrootmode="open"><style>svg{display:block;width:100%;height:auto;max-height:414px}</style>${svg}</template></div>`;
 }
 
 const css = `
@@ -73,7 +80,7 @@ ol.steps li p{margin:4px 0 0;font-size:28px;line-height:1.5}
 .col.c0 h3{color:var(--mint)}.col.c1 h3{color:var(--coral)}.col.c2 h3{color:var(--sky)}
 table{border-collapse:collapse;width:100%;font-size:23px}th,td{border-bottom:1px solid var(--line);padding:12px 14px;text-align:left;line-height:1.45;vertical-align:top}
 th{color:var(--mint);font-weight:700;font-size:21px;letter-spacing:.04em}
-figure{margin:0;text-align:center}figure img{max-width:100%;max-height:430px;border:1px solid var(--line);background:rgba(0,0,0,.25)}
+figure{margin:0;text-align:center}figure img,figure .fig{max-width:100%;max-height:430px;border:1px solid var(--line);background:rgba(0,0,0,.25)}figure .fig{display:block;padding:8px}
 figcaption{margin-top:14px;font-size:21px;color:var(--muted)}
 pre.code{position:relative;margin:0;padding:26px 28px 22px;background:#06141a;border:1px solid var(--line);font:20px/1.55 'DM Mono',monospace;color:#d6e8c8;white-space:pre}
 pre.code .lang{position:absolute;top:6px;right:12px;font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
@@ -95,13 +102,23 @@ for (let i = 0; i < n; i++) {
     <div class="slide"><div class="top"><span><b>AI CODING</b> · ${esc(spec.week)}</span><span>${String(i + 1).padStart(2, '0')} / ${String(n).padStart(2, '0')}</span></div>
     <div class="content">${body(s, i, n)}</div>
     <div class="foot"><span>${esc(spec.title)}</span><span>LEARNING CITY</span></div></div></body></html>`;
-  await page.setContent(html, { waitUntil: 'load' });
+  // a file:// page (not setContent's about:blank) so local fonts and images are allowed to load
+  const htmlFile = path.join(outDir, `slide-${String(i + 1).padStart(2, '0')}.html`);
+  fs.writeFileSync(htmlFile, html);
+  await page.goto(`file://${path.resolve(htmlFile)}`, { waitUntil: 'load' });
+  const broken = await page.evaluate(() => [...document.querySelectorAll('img')].filter((im) => !im.naturalWidth).length
+    + [...document.querySelectorAll('.fig')].filter((f) => !f.shadowRoot || !f.shadowRoot.querySelector('svg')).length);
+  if (broken) throw new Error(`slide ${i + 1}: ${broken} figure(s) failed to load`);
   await page.evaluate(async () => {
     const text = document.body.innerText;
     await Promise.all(['400', '700'].map((w) => document.fonts.load(`${w} 40px "Noto Sans TC"`, text)));
     await document.fonts.load('500 20px "DM Mono"', text);
     await document.fonts.ready;
   });
+  if (i === 0 && (spec.fontCss || []).length) {
+    const ok = await page.evaluate(() => document.fonts.check('700 40px "Noto Sans TC"', '字') && document.fonts.check('500 20px "DM Mono"', 'A'));
+    if (!ok) throw new Error('web fonts from --font-css did not load');
+  }
   // shrink-to-fit: keep the content inside the safe area above the footer
   const over = await page.evaluate(() => {
     const c = document.querySelector('.content'); const avail = 720 - 84 - 92;
