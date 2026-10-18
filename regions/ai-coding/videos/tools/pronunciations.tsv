@@ -1,0 +1,78 @@
+# 旁白轉語音前的唸法對照：左欄是字幕上出現的寫法，右欄是送進 TTS 的唸法。
+# 依 Kokoro v1.1-zh 的實測（語音辨識比對）整理；能正確唸出的英文（AI、SQL、API、CSV、GPU、MCP、
+# code review、JavaScript、C++、temperature、harness）不必列。比對時區分大小寫、以英文字邊界為準，長的詞先比對。
+pull request	合併請求
+code review	code review
+context window	上下文視窗
+AI Coding	AI 寫程式
+vibe coding	憑感覺寫程式
+Vibe coding	憑感覺寫程式
+Timsort	提姆排序
+chain-of-thought	拆解推理
+zero-shot	零範例
+few-shot	少量範例
+context	上下文
+session	工作階段
+KV cache	鍵值快取
+prompt caching	提示詞快取
+top-p	累積機率取樣
+CI/CD	持續整合與持續部署
+LLM	大型語言模型
+Python	派森
+JSON	傑森
+YAML	雅莫
+TOML	湯莫
+token	詞元
+tokens	詞元
+tokenizer	切詞器
+prompt	提示詞
+agent	代理程式
+agents	代理程式
+bug	錯誤
+Copilot	程式助手
+ChatGPT	聊天型 AI
+Cursor	AI 編輯器
+git	版本控制
+Git	版本控制
+diff	差異
+Docker	容器
+Kubernetes	容器平台
+cache	快取
+CPU	處理器
+IDE	開發環境
+PR	合併請求
+CI	持續整合
+eval	評測
+evals	評測
+McKinsey	麥肯錫
+METR	一個研究機構
+DORA	多拉
+GitHub	程式碼平台
+Node.js	JavaScript 執行環境
+HTTP	網頁
+COBOL	可波
+Java	加瓦
+schema	結構定義
+mock	模擬物件
+commit	提交
+oracle	判定依據
+lint	風格檢查
+linter	風格檢查工具
+softmax	歸一化函數
+logit	原始分數
+logits	原始分數
+prefill	預填
+decode	解碼
+TTFT	首個詞元延遲
+RAG	檢索增強生成
+SDK	開發套件
+fixture	測試夾具
+stub	替身
+YAGNI	不做用不到的功能
+SAST	靜態安全分析
+CWE	弱點分類
+DMV	監理所
+RLHF	人類回饋強化學習
+LSP	語言伺服器
+OpenAPI	介面規格
+MAX	最大
