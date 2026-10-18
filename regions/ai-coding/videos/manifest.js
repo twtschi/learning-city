@@ -23,5 +23,11 @@
   "vtt": "videos/tokens.vtt",
   "poster": "videos/tokens.jpg",
   "seconds": 281.3
+ },
+ "toolbox": {
+  "src": "videos/toolbox.mp4",
+  "vtt": "videos/toolbox.vtt",
+  "poster": "videos/toolbox.jpg",
+  "seconds": 246.5
  }
 };
