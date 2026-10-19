@@ -462,7 +462,7 @@ async function renderLesson() {
   const video = (LC.videos || {})[L.fromNote ? L.noteId : L.id];
   if (video) {
     const mins = `${Math.floor(video.seconds / 60)}:${String(Math.round(video.seconds % 60)).padStart(2, '0')}`;
-    const player = `<figure class="lesson-video"><video controls preload="none" playsinline poster="${esc(video.poster)}"><source src="${esc(video.src)}" type="video/mp4" /><track kind="captions" srclang="zh-Hant" label="中文字幕" src="${esc(video.vtt)}" default /></video><figcaption>影片導讀 · ${mins}　·　旁白為語音合成，字幕保留原文術語</figcaption></figure>`;
+    const player = `<figure class="lesson-video"><video controls preload="none" playsinline poster="${esc(video.poster)}"><source src="${esc(video.src)}" type="video/mp4" /><track kind="captions" srclang="zh-Hant" label="中文字幕" src="${esc(video.vtt)}" default /></video><figcaption>影片導讀 · ${mins}　·　旁白為 AI 語音合成</figcaption></figure>`;
     bodyHTML = bodyHTML.replace(/<\/h1>(\s*<p class="srcline">[^<]*<\/p>)?/, (m) => m + player);
   }
 

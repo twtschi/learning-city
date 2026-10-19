@@ -82,7 +82,7 @@ python regions/ai-coding/knowledge_base/tools/build_knowledge_base.py --only web
 
 筆記格式、如何加入新的來源書、如何查詢原文，請看[知識庫 README](regions/ai-coding/knowledge_base/README.md)。
 
-每章的導讀影片由 `videos/scripts/<id>.txt` 建置成 MP4 與 WebVTT 字幕（離線語音合成，不需要雲端服務），`videos/manifest.js` 決定哪些章節顯示播放器。重建方式見[影片 README](regions/ai-coding/videos/README.md)。
+每章的導讀影片由 `videos/scripts/<id>.txt` 建置成 MP4 與 WebVTT 字幕（旁白用 OpenRouter 的語音 API，也可以改用離線的 Kokoro 聲音），`videos/manifest.js` 決定哪些章節顯示播放器。重建方式見[影片 README](regions/ai-coding/videos/README.md)。
 
 重點規則：
 
@@ -108,7 +108,7 @@ python regions/ai-coding/knowledge_base/tools/build_knowledge_base.py --only web
 ## 已知限制
 
 - 進度只存在單一瀏覽器的 `localStorage`，不跨裝置、不同步。
-- AI Coding 的影片是 H.264／AAC 的 MP4。Chrome、Edge、Safari、Firefox 都能播放；不含專有編解碼器的開源 Chromium 版本（例如 Playwright 內建的 Chromium）無法播放。旁白是語音合成，口音為中國大陸普通話，部分英文術語在旁白中改讀中文，字幕保留原文。
+- AI Coding 的影片是 H.264／AAC 的 MP4。Chrome、Edge、Safari、Firefox 都能播放；不含專有編解碼器的開源 Chromium 版本（例如 Playwright 內建的 Chromium）無法播放。旁白是透過 OpenRouter 的免費語音模型（Fish Audio S2.1 Pro）產生的 AI 語音，以風格標籤要求台灣口音，不是專為台灣華語訓練的聲音；重建全部影片需要 `OPENROUTER_API_KEY`，每章一次請求。
 - AI Coding 目前的內容涵蓋 Week 1–2 的工作流（含 staff 層級的補充與可重跑的實驗），並部分涵蓋 Week 6（風險登記表）與 Week 8（判讀生產力證據）；LLM 系統的 eval 設計、agent 架構、MCP、提示注入的深入內容、推論效能等後續週次仍需要其他來源。
 - PCIe 區域單獨使用只能建立入門的心智模型，尚不足以培養實務除錯能力，詳見 [LEARNING_PLAN.md](LEARNING_PLAN.md)。
 

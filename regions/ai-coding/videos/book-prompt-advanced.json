@@ -1,0 +1,42 @@
+{
+ "id": "book-prompt-advanced",
+ "title": "進階 prompt 技巧：拆解、精煉、控制輸出",
+ "seconds": 215.1,
+ "slides": 8,
+ "characters": 1312,
+ "bytes": 2476225,
+ "voice": "openrouter fish-audio/s2.1-pro-free:free voice=96ea459f9ca145899ade882d871d2968 prefix='[台灣口音，低沉、沉穩的男聲]' max_chars=4000",
+ "asr_cer": 0.066,
+ "worst": [
+  {
+   "text": "輸出控制變成結構化輸出與 harness 層的驗證。",
+   "spoken": "輸出控制變成結構化輸出與 harness 層的驗證。",
+   "heard": "输出控制变成借口化输出与 honey层的验证",
+   "cer": 0.261
+  },
+  {
+   "text": "風格交給 linter 與 formatter 自動檢查；",
+   "spoken": "風格交給 linter 與 formatter 自動檢查；",
+   "heard": "风格交给lin 与 format 自动检查",
+   "cer": 0.25
+  },
+  {
+   "text": "落實在 harness 裡，格式可以用結構化輸出加上 schema 驗證，不合格就帶著具體錯誤重試；",
+   "spoken": "落實在 harness 裡，格式可以用結構化輸出加上 schema 驗證，不合格就帶著具體錯誤重試；",
+   "heard": "落实在 honeynes里格式可以用借口化输出加上 schema 验证不合格就带着具体错误重试",
+   "cer": 0.186
+  },
+  {
+   "text": "而在代理程式裡，這些規則要落實在 harness，而不只寫在提示詞裡。",
+   "spoken": "而在代理程式裡，這些規則要落實在 harness，而不只寫在提示詞裡。",
+   "heard": "而在代理城市里这些规则要落实在 harnessnes 而不只写在提示词里",
+   "cer": 0.161
+  },
+  {
+   "text": "最後再列出限制，例如型別標註、用日誌記錄錯誤、使用連線池。",
+   "spoken": "最後再列出限制，例如型別標註、用日誌記錄錯誤、使用連線池。",
+   "heard": "最后再列出限制例如行别标注用日志记录错误使用年限词",
+   "cer": 0.16
+  }
+ ]
+}

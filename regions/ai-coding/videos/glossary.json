@@ -1,0 +1,42 @@
+{
+ "id": "glossary",
+ "title": "術語表",
+ "seconds": 209.7,
+ "slides": 7,
+ "characters": 1270,
+ "bytes": 2282225,
+ "voice": "openrouter fish-audio/s2.1-pro-free:free voice=96ea459f9ca145899ade882d871d2968 prefix='[台灣口音，低沉、沉穩的男聲]' max_chars=4000",
+ "asr_cer": 0.121,
+ "worst": [
+  {
+   "text": "harness 組出上下文，切成詞元；",
+   "spoken": "harness 組出上下文，切成詞元；",
+   "heard": "亨煮出上下文切成十圆",
+   "cer": 0.625
+  },
+  {
+   "text": "鍵值快取保留的，是已處理詞元的鍵與值；",
+   "spoken": "鍵值快取保留的，是已處理詞元的鍵與值；",
+   "heard": "刚子快取保留的自己处理词源的监语值",
+   "cer": 0.412
+  },
+  {
+   "text": "接著是選字。",
+   "spoken": "接著是選字。",
+   "heard": "接着是选自",
+   "cer": 0.4
+  },
+  {
+   "text": "上下文視窗是一次請求裡，輸入加輸出的 token 上限。",
+   "spoken": "上下文視窗是一次請求裡，輸入加輸出的 token 上限。",
+   "heard": "上下文试穿是一次请球里输入加输出的头坑上线",
+   "cer": 0.375
+  },
+  {
+   "text": "這一章是第一週的術語表。",
+   "spoken": "這一章是第一週的術語表。",
+   "heard": "这张是第一周的注意表",
+   "cer": 0.364
+  }
+ ]
+}

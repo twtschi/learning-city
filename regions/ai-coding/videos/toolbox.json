@@ -1,41 +1,42 @@
 {
  "id": "toolbox",
  "title": "Tool Use：誰真正執行了工具",
- "seconds": 247.0,
+ "seconds": 216.4,
  "slides": 7,
- "characters": 993,
- "bytes": 2547150,
- "asr_cer": 0.083,
+ "characters": 1310,
+ "bytes": 2376362,
+ "voice": "openrouter fish-audio/s2.1-pro-free:free voice=96ea459f9ca145899ade882d871d2968 prefix='[台灣口音，低沉、沉穩的男聲]' max_chars=4000",
+ "asr_cer": 0.076,
  "worst": [
   {
-   "text": "答案是 harness 與沙箱。",
-   "spoken": "答案是 harness 与沙箱",
-   "heard": "答案是 hoish 沙箱",
-   "cer": 0.462
+   "text": "這一章談工具使用。",
+   "spoken": "這一章談工具使用。",
+   "heard": "这张弹工具使用",
+   "cer": 0.375
   },
   {
    "text": "三個實務重點。",
-   "spoken": "三个实务重点",
+   "spoken": "三個實務重點。",
    "heard": "三个食物重点",
    "cer": 0.333
   },
   {
+   "text": "答案是 harness 與沙箱。",
+   "spoken": "答案是 harness 與沙箱。",
+   "heard": "答案是 harnessnes雨沙箱",
+   "cer": 0.308
+  },
+  {
    "text": "第一，就算啟用了結構化輸出的約束，harness 端也一定要再驗證一次。",
-   "spoken": "第一，就算启用了结构化输出的约束，harness 端也一定要再验证一次",
-   "heard": "第一额就算起用了结构化输出的约束号呢官也一定要再验证一次",
-   "cer": 0.312
+   "spoken": "第一，就算啟用了結構化輸出的約束，harness 端也一定要再驗證一次。",
+   "heard": "第一就算启用了借口化输出的约束和尼斯端也一定要再验证一次",
+   "cer": 0.281
   },
   {
-   "text": "模型只提出工具呼叫，執行、驗證、授權都在 harness；",
-   "spoken": "模型只提出工具呼叫，执行，验证，授权都在 harness",
-   "heard": "模型只提出工具呼叫执行验证授权都在哈尔",
-   "cer": 0.292
-  },
-  {
-   "text": "harness 負責解析呼叫、驗證參數，例如結構是否正確、路徑是否在允許的範圍、指令是否危險；",
-   "spoken": "harness 负责解析呼叫，验证参数，例如结构是否正确，路径是否在允许的范围，指令是否危险",
-   "heard": "哈负责解析呼叫验证参数例如结构是否正确路径是否在允许的范围指令是否危险",
-   "cer": 0.171
+   "text": "第三，由你的程式，也就是 harness，決定要不要執行、怎麼執行。",
+   "spoken": "第三，由你的程式，也就是 harness，決定要不要執行、怎麼執行。",
+   "heard": "第三有你的城市也就是 hernes 决定要不要执行怎么执行",
+   "cer": 0.179
   }
  ]
 }
